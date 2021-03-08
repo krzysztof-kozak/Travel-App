@@ -37,6 +37,27 @@ function listening() {
 };
 
 
+// API INFO
+const dotenv = require('dotenv');
+dotenv.config();
 
+console.log(`Your username is ${process.env.geonamesUserName}`);
+console.log(`Your API key from weatherBit is ${process.env.weatherbitApiKey}`);
+console.log(`Your API key from pixabay ${process.env.pixabayApiKey}`);
 
+const geonamesUsername = process.env.geonamesUsername;
+const weatherbitApiKey = process.env.weatherbitApiKey;
+const pixabayApiKey = process.env.pixabayApiKey;
 
+//send api key to client side
+
+app.get('/api_data', sendApiKey);
+
+function sendApiKey(req, res) {
+    res.send({
+        geonamesUsername: geonamesUsername,
+        weatherbitApiKey: weatherbitApiKey,
+        pixabayApiKey: pixabayApiKey,
+    })
+    res.send(console.log('hello I`m your APi Key '))
+}
