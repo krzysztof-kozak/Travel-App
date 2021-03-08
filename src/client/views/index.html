@@ -1,12 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Travel App</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/73cf130a3e.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <h1>czesc</h1>
+    <!-- Burger MENU -->
+    <button class="burger-btn">
+        <div class="burger-btn__box">
+            <div class="burger-btn__bars"></div>
+        </div>
+    </button>
+
+    <nav class="nav">
+        <div class="nav__items">
+            <a href="#aboutApp" class="nav__item">Plan Your Trip</a>
+            <a href="#contact" class="nav__item">Contact</a>
+        </div>
+    </nav>
+    <!-- HEADER -->
+    <header class="header section">
+        <div class="header__text-container">
+            <h1 class="header__heading">Travel Planner</h1>
+            <p class="header__text"> prepare your trip like a pro</p>
+        </div>
+        <div class="white-block white-block-left"></div>
+        <section id="aboutApp" class="main-form">
+            <form class="form">
+                <input class="form__input-search" type="search" placeholder="Where do you want to go?">
+                <label class="form__label-date" for="from">Date</label>
+                <input class="form__input-date" type="date" name="from">
+
+                <input class="form__input-submit" type="submit" value="Search">
+            </form>
+        </section>
+    </header>
+    <!-- MAIN SECTION -->
+    <main class="main">
+        <section class="feature-plan warpper">
+
+            <div class="feature-plan__img">
+
+            </div>
+
+            <div class="feature-plan__text">
+
+            </div>
+
+        </section>
+    </main>
+    <!-- FOOTER -->
+    <footer id='contact' class="footer">
+        <p class="footer__paragraph">
+            &copy2021 Coded by
+            <a href="https://github.com/CarolinaFledgling" class="footer__link">Karolina Kulinska</a>
+        </p>
+    </footer>
 </body>
+
 </html>
