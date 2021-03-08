@@ -1,11 +1,13 @@
-import './styles/base.scss';
-import './styles/colors.scss';
-import './styles/mixins.scss';
+// import './sass/base.scss';
+// import './sass/colors.scss';
+// import './sass/mixins.scss';
+// import './sass/feature-plan.scss';
+// import './sass/form.scss';
+// import './sass/header.scss';
+// import './sass/nav.scss';
+// import './sass/footer.scss';
 
 
+// czy tutaj nie powinno być 
 
-import './styles/feature-plan.scss';
-import './styles/form.scss';
-import './styles/header.scss';
-import './styles/nav.scss';
-import './styles/footer.scss';
+import './sass/main.scss'
