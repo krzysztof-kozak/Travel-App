@@ -1,0 +1,12 @@
+@import './styles/colors.scss';
+@import './styles/mixins.scss';
+
+@mixin burgerBtn{
+    position: absolute;
+    right: 0;
+    height: 3px;
+    content: '';
+    background-color: $white;
+    transition: width .3s;
+
+}

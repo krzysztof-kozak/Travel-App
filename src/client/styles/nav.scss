@@ -1,0 +1,131 @@
+@import './styles/colors.scss';
+@import './styles/mixins.scss';
+
+//NAV
+
+.burger-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    padding: 1em;
+    background: none;
+    border: 1px solid transparent;
+    z-index: 1000;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+        border: 1 px solid rgba(255, 255, 255, .5);
+        border-radius: 8px;
+
+    }
+
+
+    &:hover {
+
+        .burger-btn__bars::after,
+        .burger-btn__bars::before {
+            width: 100%;
+        }
+    }
+
+    &__box {
+        position: relative;
+        width: 40px;
+        height: 30px;
+    }
+
+    &__bars,
+    &__bars::after,
+    &__bars::before {
+        @include burgerBtn
+    }
+
+    &__bars {
+        width: 100%;
+
+        &::after {
+            top: 13px;
+            width: 60%;
+        }
+
+        &::before {
+            top: 27px;
+            width: 30%;
+            transition-delay: .1s;
+        }
+    }
+
+}
+
+// Media FORM nav
+
+@media(max-width:768px) {
+    .burger-btn {
+        top: 10px;
+        right: 10px;
+        padding: 0.5rem;
+
+        &__bars {
+            width: 100%;
+
+            &::after {
+                top: 10px;
+                width: 50%;
+            }
+
+            &::before {
+                top: 20px;
+                width: 30%;
+                transition-delay: .1s;
+            }
+        }
+    }
+
+}
+
+.nav {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    background-image: $gradient;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(100%);
+    transition: .5s cubic-bezier(0.65, 0.05, 0.36, 1);
+
+    &--active {
+        transform: translateX(0);
+    }
+
+    &__item {
+        position: relative;
+        display: block;
+        margin: 0.5em 0;
+        padding: 0.5em 2em;
+        font-size: 2.8rem;
+        color: $white;
+        text-decoration: none;
+        font-weight: 300;
+
+        &::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background-color: $white;
+            content: '';
+            transform: scaleY(0);
+            transition: transform .3s;
+        }
+
+        &:hover::before {
+            transform: scaleY(1);
+        }
+
+    }
+}
