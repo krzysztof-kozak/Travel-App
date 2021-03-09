@@ -30,10 +30,27 @@ function getDataFromApi(e) {
         // receive api key from server side
         fetch('/api_data')
             .then((res) => res.json())
-            .then((config) => {
-                console.log(config)
+            .then((keys) => {
+                console.log(keys)
+                const geonamesUsername = keys.geonamesUsername;
+                const weatherbitApiKey = keys.weatherbitApiKey;
+                const pixabayApiKey = keys.pixabayApiKey;
 
+
+                //fetching lat and lng from geonames api
+                fetch(`http://api.geonames.org/searchJSON?q=${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        // console.log(data)
+                        const latitude = data.geonames[0].lat;
+                        const longitude = data.geonames[0].lng;
+                        const country = data.geonames[0].countryName;
+                        const town = data.geonames[0].name
+                        console.log(latitude, longitude, country, town)
+
+                    })
             })
+
     }
 
 
