@@ -1,3 +1,5 @@
+let projectData = {};
+
 var path = require('path');
 const express = require('express');
 
@@ -59,5 +61,5 @@ function sendApiKey(req, res) {
         weatherbitApiKey: weatherbitApiKey,
         pixabayApiKey: pixabayApiKey,
     })
-    res.send(console.log('hello I`m your APi Key '))
+    res.send(console.log('hello I`m your APi Keys '))
 }
