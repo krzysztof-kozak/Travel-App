@@ -3,9 +3,23 @@ const inputDateOfTravel = document.querySelector('.form__input-date')
 const btnSubmitForm = document.querySelector('.form__input-submit')
 const warning = document.querySelector('.warning__text')
 
-// Current Date 
-let d = new Date();
-let newDate = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+//Global variable for coundown date
+const eventDay = document.querySelector('#event-day');
+const eventMonth = document.querySelector('#event-month');
+const eventYear = document.querySelector('#event-year');
+
+const daysCount = document.querySelector('.days-count');
+const hoursCount = document.querySelector('.hours-count');
+const minutesCount = document.querySelector('.minutes-count');
+const secondsCount = document.querySelector('.seconds-count');
+
+const counddownTitle = document.querySelector('.countdown__title')
+const timeCards = document.querySelector('.time-cards')
+
+
+
+
+
 
 
 
@@ -20,9 +34,9 @@ function getDataFromApi(e) {
     e.preventDefault()
 
     const inputDestinationValue = inputDestination.value;
-    const dateofTravelValue = inputDateOfTravel.value;
 
-    if (inputDestinationValue === '' && dateofTravelValue === '') {
+
+    if (inputDestinationValue === '') {
         warning.textContent = "😊 Please, enter your a travel destination ✈️ and the start date for travel 📅";
         return false;
 
@@ -59,17 +73,66 @@ function getDataFromApi(e) {
 }
 
 
+// coundown how soon the trip is
+let usersTime;
+
+
+//Time calculations for days, hours, minutes, seconds from today`s date to our enter date
+const setTime = () => {
+    const currentTime = new Date();
+    //the difference between now and the our enter date 
+    const differenceTime = usersTime - currentTime;
+    console.log(differenceTime) // millisecond
+
+    //1000 milisecond is 1 seconds , 1 minutes is 60 seconds , 1 hour is 60 minutes  1 day is 24 hours
+    const days = Math.floor(differenceTime / 1000 / 60 / 60 / 24);
+    const hours = Math.floor(differenceTime / 1000 / 60 / 60) % 24;
+    const minutes = Math.floor(differenceTime / 1000 / 60) % 60;
+    const seconds = Math.floor(differenceTime / 1000) % 60;
+
+    daysCount.textContent = days;
+    hoursCount.textContent = hours;
+    minutesCount.textContent = minutes;
+    secondsCount.textContent = seconds;
+
+}
+
+const appUpDate = () => {
+    //our enter date 
+    usersTime = new Date(`${eventDay.value} ${eventMonth.value} ${eventYear.value}`)
+    console.log(usersTime)
+    setTime()
+}
+
+
+function activeClass() {
+    counddownTitle.classList.toggle('active')
+    timeCards.classList.toggle('active')
+}
+
+
+
+
 
 btnSubmitForm.addEventListener('click', getDataFromApi)
+btnSubmitForm.addEventListener('click', activeClass)
+btnSubmitForm.addEventListener('click', appUpDate)
+
+appUpDate()
+setInterval(setTime, 1000)
 
 
 
-// coundown how soon the trip is
+
 
 
 
 
 export {
     getDataFromApi,
+    activeClass,
+    appUpDate,
+    setTime,
+    
 
 }

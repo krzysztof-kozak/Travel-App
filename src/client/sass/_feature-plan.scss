@@ -24,6 +24,12 @@
     text-align: center;
 
     &__title {
+        visibility: hidden;
         margin-bottom: 2rem;
     }
+}
+
+// class for active and not active items 
+.active {
+    visibility: visible;
 }

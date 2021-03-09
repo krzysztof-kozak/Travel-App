@@ -3,6 +3,7 @@
     justify-content: space-evenly;
     width: 100%;
     margin: 1rem 0;
+    visibility: hidden;
 }
 
 .card {
@@ -24,4 +25,9 @@
 
 .card-title {
     text-align: center;
+}
+
+// class for active and not active items 
+.active {
+    visibility: visible;
 }
