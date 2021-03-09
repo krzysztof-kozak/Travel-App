@@ -36,8 +36,18 @@
         <section id="planYourTrip" class="main-form">
             <form class="form">
                 <input class="form__input-search" type="search" placeholder="Where do you want to go?">
-                <label class="form__label-date" for="from">Date</label>
-                <input class="form__input-date" type="date" name="from">
+                <table class="date">
+                    <tr>
+                        <td><label class="date__label" for="event-day">Day</label></td>
+                        <td><label class="date__label" for="event-month">Month</label></td>
+                        <td><label class="date__label" for="event-year">Year</label></td>
+                    </tr>
+                    <tr>
+                        <td><input class="date__day" type="number" id="event-day" maxlength="2" value="1"></td>
+                        <td><input class="date__month" type="number" id="event-month" maxlength="2" value="1"></td>
+                        <td><input class="date__year" type="number" id="event-year" maxlength="4" value="2021"></td>
+                    </tr>
+                </table>
 
                 <input class="form__input-submit" type="submit" value="Search">
             </form>
@@ -52,13 +62,34 @@
             </div>
 
             <div class="feature-plan__text">
-
+                <div class="countdown">
+                    <h2 class="countdown__title">How soon the trip is?</h2>
+                    <div class="time-cards">
+                        <div class="card">
+                            <p class="days-count number">1</p>
+                            <p class="card-title">Days</p>
+                        </div>
+                        <div class="card">
+                            <p class="hours-count number">1</p>
+                            <p class="card-title">Hours</p>
+                        </div>
+                        <div class="card">
+                            <p class="minutes-count number">1</p>
+                            <p class="card-title">Minutes</p>
+                        </div>
+                        <div class="card">
+                            <p class="seconds-count number">1</p>
+                            <p class="card-title">Seconds</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <section class="warning">
+                <p class="warning__text"></p>
+            </section>
+            <button class="btnSave">Save Trip</button>
+        </section>
 
-        </section>
-        <section class="warning">
-            <p class="warning__text"></p>
-        </section>
     </main>
     <!-- FOOTER -->
     <footer id='contact' class="footer">

@@ -1,0 +1,27 @@
+.time-cards {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0;
+    width: 18%;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.number {
+    margin-bottom: 20px;
+    font-weight: 300;
+    font-size: 2rem;
+}
+
+.card-title {
+    text-align: center;
+}

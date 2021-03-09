@@ -63,6 +63,12 @@ function getDataFromApi(e) {
 btnSubmitForm.addEventListener('click', getDataFromApi)
 
 
+
+// coundown how soon the trip is
+
+
+
+
 export {
     getDataFromApi,
 
