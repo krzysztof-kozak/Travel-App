@@ -62,7 +62,35 @@ function getDataFromApi(e) {
                         const town = data.geonames[0].name
                         console.log(latitude, longitude, country, town)
 
+                        //fetching current weather from weatherbit
+                        if (differenceTime < 7) {
+                            fetch(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
+                                .then((res) => res.json())
+                                .then((data) => {
+                                    console.log(data)
+                                    let temperature = data.data[0].temp;
+                                    let descriptionOfWeather = data.data[0].weather.description;
+                                    let city = data.data[0].city_name;
+                                    let icon = data.data[0].weather.icon;
+                                    console.log(temperature, descriptionOfWeather, city, icon)
+                                })
+                        } else {
+                            //fetching future weather from weatherbit
+                            // predicted weather of the departure date
+                            fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
+                                .then((res) => res.json())
+                                .then((data) => {
+                                    console.log(data)
+                                    let temperature = data.data[0].temp;
+                                    let descriptionOfWeather = data.data[0].weather.description;
+                                    let city = data.city_name;
+                                    console.log(temperature, descriptionOfWeather, city)
+                                })
+                        }
+
                     })
+
+
             })
 
     }
@@ -75,14 +103,15 @@ function getDataFromApi(e) {
 
 // coundown how soon the trip is
 let usersTime;
+let differenceTime;
 
 
 //Time calculations for days, hours, minutes, seconds from today`s date to our enter date
 const setTime = () => {
     const currentTime = new Date();
     //the difference between now and the our enter date 
-    const differenceTime = usersTime - currentTime;
-    console.log(differenceTime) // millisecond
+    differenceTime = usersTime - currentTime;
+    // console.log(differenceTime) // millisecond
 
     //1000 milisecond is 1 seconds , 1 minutes is 60 seconds , 1 hour is 60 minutes  1 day is 24 hours
     const days = Math.floor(differenceTime / 1000 / 60 / 60 / 24);
@@ -100,7 +129,6 @@ const setTime = () => {
 const appUpDate = () => {
     //our enter date 
     usersTime = new Date(`${eventMonth.value} ${eventDay.value} ${eventYear.value}`)
-    console.log(usersTime)
     setTime()
 }
 
@@ -118,7 +146,7 @@ btnSubmitForm.addEventListener('click', getDataFromApi)
 btnSubmitForm.addEventListener('click', activeClass)
 btnSubmitForm.addEventListener('click', appUpDate)
 
-appUpDate()
+// appUpDate()
 setInterval(setTime, 1000)
 
 
@@ -133,6 +161,6 @@ export {
     activeClass,
     appUpDate,
     setTime,
-    
+
 
 }
