@@ -99,7 +99,7 @@ const setTime = () => {
 
 const appUpDate = () => {
     //our enter date 
-    usersTime = new Date(`${eventDay.value} ${eventMonth.value} ${eventYear.value}`)
+    usersTime = new Date(`${eventMonth.value} ${eventDay.value} ${eventYear.value}`)
     console.log(usersTime)
     setTime()
 }
