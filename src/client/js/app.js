@@ -1,5 +1,4 @@
 const inputDestination = document.querySelector('.form__input-search')
-const inputDateOfTravel = document.querySelector('.form__input-date')
 const btnSubmitForm = document.querySelector('.form__input-submit')
 const warning = document.querySelector('.warning__text')
 
@@ -16,6 +15,10 @@ const secondsCount = document.querySelector('.seconds-count');
 const counddownTitle = document.querySelector('.countdown__title')
 const timeCards = document.querySelector('.time-cards')
 
+// coundown how soon the trip is
+let usersTime;
+let differenceTime;
+
 
 
 
@@ -26,9 +29,6 @@ const timeCards = document.querySelector('.time-cards')
 
 // API geonames api
 //what we need latitude, longitude, country,
-
-
-
 
 function getDataFromApi(e) {
     e.preventDefault()
@@ -60,10 +60,10 @@ function getDataFromApi(e) {
                         const longitude = data.geonames[0].lng;
                         const country = data.geonames[0].countryName;
                         const town = data.geonames[0].name
-                        console.log(latitude, longitude, country, town)
+                        console.log(latitude, longitude, town, country)
 
                         //fetching current weather from weatherbit
-                        
+
                         if (differenceTime <= 7) {
                             fetch(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                                 .then((res) => res.json())
@@ -89,6 +89,14 @@ function getDataFromApi(e) {
                                 })
                         }
 
+                        //fetching pixabay image
+                        fetch(`https://pixabay.com/api/?key=${pixabayApiKey}&q=${country}&orientation=horizontal&category=buildings&per_page=3`)
+                            .then((res) => res.json())
+                            .then((data) => {
+                                console.log(data)
+                                const img = data.hits[0].webformatURL;
+                                console.log(img);
+                            })
                     })
 
 
@@ -102,9 +110,7 @@ function getDataFromApi(e) {
 }
 
 
-// coundown how soon the trip is
-let usersTime;
-let differenceTime;
+
 
 
 //Time calculations for days, hours, minutes, seconds from today`s date to our enter date
@@ -147,7 +153,6 @@ btnSubmitForm.addEventListener('click', getDataFromApi)
 btnSubmitForm.addEventListener('click', activeClass)
 btnSubmitForm.addEventListener('click', appUpDate)
 
-// appUpDate()
 setInterval(setTime, 1000)
 
 
