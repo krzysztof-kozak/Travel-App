@@ -63,7 +63,8 @@ function getDataFromApi(e) {
                         console.log(latitude, longitude, country, town)
 
                         //fetching current weather from weatherbit
-                        if (differenceTime < 7) {
+                        
+                        if (differenceTime <= 7) {
                             fetch(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                                 .then((res) => res.json())
                                 .then((data) => {

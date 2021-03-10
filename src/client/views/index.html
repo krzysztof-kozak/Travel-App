@@ -45,20 +45,24 @@
                     <tr>
                         <td><input class="date__day" type="number" id="event-day" min="1" max="31" value="1"></td>
                         <td><input class="date__month" type="number" id="event-month" min="1" max="12" value="1"></td>
-                        <td><input class="date__year" type="number" id="event-year" min="2021" max="2200" maxlength="4" value="2021"></td>
+                        <td><input class="date__year" type="number" id="event-year" min="2021" max="2200" maxlength="4"
+                                value="2021"></td>
                     </tr>
                 </table>
 
                 <input class="form__input-submit" type="submit" value="Search">
             </form>
+            <section class="warning">
+                <p class="warning__text"></p>
+            </section>
         </section>
     </header>
     <!-- MAIN SECTION -->
     <main class="main">
-        <section class="feature-plan warpper">
+        <section class="feature-plan wrapper">
 
             <div class="feature-plan__img">
-
+                <img class="feature-plan__img-city" src="" alt="a picture of the city">
             </div>
 
             <div class="feature-plan__text">
@@ -83,11 +87,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="weather-info">
+                    <div class="weather-info__icon">
+                        <img class="weather-info__img-weather" src="" alt="a picture of the weather">
+                    </div>
+
+                    <div class="weather-info__details">
+                        <div id="temp">Temperature: </div>
+                        <div id="city">City: </div>
+                        <div id="weather">Description: </div>
+                    </div>
+
+                </div>
+                <button class="btn-save" type="submit">Save Trip</button>
             </div>
-            <section class="warning">
-                <p class="warning__text"></p>
-            </section>
-            <button class="btnSave">Save Trip</button>
+
         </section>
 
     </main>

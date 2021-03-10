@@ -1,10 +1,12 @@
-@import './colors';
+@import './colors.scss';
 @import './mixins.scss';
-@import './base';
+@import './base.scss';
+@import './buttons';
 
 @import './feature-plan.scss';
+@import './weather-info.scss';
 @import './form.scss';
-@import './time-cards';
+@import './countdown.scss';
 @import './header.scss';
 @import './nav.scss';
 @import './footer.scss';

@@ -31,7 +31,9 @@
         border: 0px solid transparent;
         transition: all 0.3s linear;
         background-color: $sunglow;
-        font-weight: 500;
+        font-family: 'Roboto';
+        font-family: 300;
+        cursor: pointer;
 
         &:hover {
             background-color: $sunglowDark;
@@ -60,11 +62,6 @@
 
 // INPUTS days, month, year
 
-// .date{
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;    
-// }
 
 .date__label {
     font-weight: 300;
