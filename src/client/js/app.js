@@ -130,7 +130,7 @@ const appUpDate = () => {
     setTime();
 }
 
-// show ITEMs
+// show Items
 
 function showItem() {
     counddownTitle.classList.add('active')
