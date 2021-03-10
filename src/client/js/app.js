@@ -40,8 +40,7 @@ function getDataFromApi(e) {
     enterCity.innerHTML = inputDestination.value;
 
     if (inputDestinationValue === '') {
-        warning.textContent = "😊 Please, enter your a travel destination ✈️ and the start date for travel 📅";
-        noShow()
+        alertFn()
         return false;
 
     } else {
@@ -64,9 +63,8 @@ function getDataFromApi(e) {
                         const longitude = data.geonames[0].lng;
                         const country = data.geonames[0].countryName;
                         // console.log(latitude, longitude, town, country)
-
+                        showItem()
                         //fetching current weather from weatherbit
-
                         if (differenceTime <= 7) {
                             fetch(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                                 .then((res) => res.json())
@@ -94,21 +92,15 @@ function getDataFromApi(e) {
                             .then((data) => {
                                 console.log(data)
                                 imgCountry.src = `${data.hits[0].webformatURL}`;
-                               
+
                             })
 
                     })
-
-
             })
             .catch((err) => {
                 console.log(err, 'something went wrong')
             })
     }
-
-
-
-
 }
 
 
@@ -136,24 +128,19 @@ const appUpDate = () => {
     //our enter date 
     usersTime = new Date(`${eventMonth.value} ${eventDay.value} ${eventYear.value}`)
     setTime();
+}
+
+// show ITEMs
+
+function showItem() {
     counddownTitle.classList.add('active')
     timeCards.classList.add('active')
     btnDelete.classList.add('active')
     imgCountry.classList.add('active')
 }
 
-// const showItems = () => {
-//     counddownTitle.classList.add('active')
-//     timeCards.classList.add('active')
-//     btnDelete.classList.add('active')
-//     imgCountry.classList.add('active')
-// }
-
-
-
 
 //Delete trip 
-
 function cleanUp() {
     temp.innerHTML = "";
     weatherDescription.innerHTML = "";
@@ -167,11 +154,10 @@ function cleanUp() {
 
 }
 
-function noShow() {
-    counddownTitle.style.display = 'none';
-    timeCards.style.display = 'none';
-    btnDelete.style.display = 'none'
-    imgCountry.style.display = 'none'
+
+// alert 
+function alertFn() {
+    alert("😊 Please, enter your a travel destination ✈️ and the start date for travel 📅");
 }
 
 
@@ -182,6 +168,14 @@ btnDelete.addEventListener('click', cleanUp)
 setInterval(setTime, 1000)
 
 
+
+
+
+//For the test in JEST 
+
+const subtract = (a,b) => a - b;
+
+module.exports = subtract;
 
 export {
     getDataFromApi,

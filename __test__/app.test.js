@@ -1,10 +1,5 @@
-import {
-    getDataFromApi
-} from '../src/client/js/app'
+const subtract = require('../src/client/js/app');
 
-
-describe('ensure getDataFromApi function exists', () => {
-    test('ensure getDataFromApi function exists', () => {
-        expect(getDataFromApi).toBeDefined();
-    })
-})
+test('subtract 2 - 1 to equal 1', () => {
+  expect(subtract(2, 1)).toBe(1);
+});

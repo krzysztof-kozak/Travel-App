@@ -14,6 +14,8 @@ const handleNav = () => {
 
 navBtn.addEventListener('click', handleNav);
 
+
 export {
-    handleNav
+    handleNav,
+ 
 }
