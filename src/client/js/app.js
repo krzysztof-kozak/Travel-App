@@ -1,6 +1,7 @@
-const inputDestination = document.querySelector('.form__input-search')
-const btnSubmitForm = document.querySelector('.form__input-submit')
-const warning = document.querySelector('.warning__text')
+const inputDestination = document.querySelector('.form__input-search');
+const btnSubmitForm = document.querySelector('.form__input-submit');
+const warning = document.querySelector('.warning__text');
+const btnDelete = document.querySelector('.btn-delete');
 
 //Global variable for coundown date
 const eventDay = document.querySelector('#event-day');
@@ -25,13 +26,7 @@ const temp = document.querySelector('.temp')
 const enterCity = document.querySelector('.city')
 const weatherDescription = document.querySelector('.weather')
 const imgCountry = document.querySelector('.feature-plan__img-city')
-const imgIconOfWeather = document.querySelector('.weather-info__img-weather')
-
-
-
-
-
-
+// const imgIconOfWeather = document.querySelector('.weather-info__img-weather')
 
 
 
@@ -46,6 +41,7 @@ function getDataFromApi(e) {
 
     if (inputDestinationValue === '') {
         warning.textContent = "😊 Please, enter your a travel destination ✈️ and the start date for travel 📅";
+        noShow()
         return false;
 
     } else {
@@ -67,7 +63,6 @@ function getDataFromApi(e) {
                         const latitude = data.geonames[0].lat;
                         const longitude = data.geonames[0].lng;
                         const country = data.geonames[0].countryName;
-                        // const town = data.geonames[0].name
                         // console.log(latitude, longitude, town, country)
 
                         //fetching current weather from weatherbit
@@ -79,9 +74,7 @@ function getDataFromApi(e) {
                                     console.log(data)
                                     temp.innerHTML = `${Math.round(data.data[0].temp)}°C`
                                     weatherDescription.innerHTML = `${data.data[0].weather.description}`;
-                                    // enterCity = `${data.data[0].city_name}`;
                                     // imgIconOfWeather.src = `${data.data[0].weather.icon}`;
-                                    // console.log(temperature, descriptionOfWeather, city, icon)
                                 })
                         } else {
                             //fetching future weather from weatherbit
@@ -92,8 +85,6 @@ function getDataFromApi(e) {
                                     console.log(data)
                                     temp.innerHTML = `${Math.round(data.data[0].temp)}°C`
                                     weatherDescription.innerHTML = `${data.data[0].weather.description}`;
-                                    // enterCity = `${data.city_name}`;
-                                    // console.log(temperature, descriptionOfWeather, city)
                                 })
                         }
 
@@ -103,23 +94,22 @@ function getDataFromApi(e) {
                             .then((data) => {
                                 console.log(data)
                                 imgCountry.src = `${data.hits[0].webformatURL}`;
-                                console.log(img);
+                               
                             })
 
                     })
 
 
             })
-
+            .catch((err) => {
+                console.log(err, 'something went wrong')
+            })
     }
 
 
 
 
 }
-
-
-
 
 
 //Time calculations for days, hours, minutes, seconds from today`s date to our enter date
@@ -145,37 +135,56 @@ const setTime = () => {
 const appUpDate = () => {
     //our enter date 
     usersTime = new Date(`${eventMonth.value} ${eventDay.value} ${eventYear.value}`)
-    setTime()
+    setTime();
+    counddownTitle.classList.add('active')
+    timeCards.classList.add('active')
+    btnDelete.classList.add('active')
+    imgCountry.classList.add('active')
 }
 
+// const showItems = () => {
+//     counddownTitle.classList.add('active')
+//     timeCards.classList.add('active')
+//     btnDelete.classList.add('active')
+//     imgCountry.classList.add('active')
+// }
 
-function activeClass() {
-    counddownTitle.classList.toggle('active')
-    timeCards.classList.toggle('active')
+
+
+
+//Delete trip 
+
+function cleanUp() {
+    temp.innerHTML = "";
+    weatherDescription.innerHTML = "";
+    imgCountry.src = "";
+    warning.textContent = "";
+    enterCity.innerHTML = "";
+    counddownTitle.classList.remove('active');
+    timeCards.classList.remove('active');
+    btnDelete.classList.remove('active')
+    imgCountry.classList.remove('active')
+
 }
 
-
-
+function noShow() {
+    counddownTitle.style.display = 'none';
+    timeCards.style.display = 'none';
+    btnDelete.style.display = 'none'
+    imgCountry.style.display = 'none'
+}
 
 
 btnSubmitForm.addEventListener('click', getDataFromApi)
-btnSubmitForm.addEventListener('click', activeClass)
 btnSubmitForm.addEventListener('click', appUpDate)
+btnDelete.addEventListener('click', cleanUp)
 
 setInterval(setTime, 1000)
 
 
 
-
-
-
-
-
 export {
     getDataFromApi,
-    activeClass,
     appUpDate,
     setTime,
-
-
 }

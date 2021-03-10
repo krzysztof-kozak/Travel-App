@@ -7,3 +7,7 @@ import {
 import {
     getDataFromApi
 } from './js/app'
+
+import {
+    appUpDate
+} from './js/app'

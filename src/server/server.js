@@ -63,3 +63,8 @@ function sendApiKey(req, res) {
     })
     res.send(console.log('hello I`m your APi Keys '))
 }
+
+
+module.exports = {
+    app
+}
