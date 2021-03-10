@@ -1,7 +1,7 @@
 // MAIN
 
 .main {
-    height: 50vh;
+    margin: 2rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,19 +9,31 @@
 
 .feature-plan {
     height: auto;
-    padding: 2em;
+    margin: 1rem;
+    padding: 1em;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     // align-items: center;
     // justify-content: center;
     border: 1px solid $black;
 
-   
 
-    &__text{
+
+    &__text {
         display: flex;
         flex-direction: column;
         justify-content: center;
         // align-items: center;
+    }
+}
+
+
+// Media
+
+@media(max-width:768px) {
+    .feature-plan {
+        grid-template-columns: repeat(1, 1fr);
+        justify-content: center;
+        align-items: center;
     }
 }
