@@ -169,8 +169,6 @@ setInterval(setTime, 1000)
 
 
 
-
-
 //For the test in JEST 
 
 const subtract = (a,b) => a - b;
