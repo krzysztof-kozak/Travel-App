@@ -19,6 +19,14 @@ const timeCards = document.querySelector('.time-cards')
 let usersTime;
 let differenceTime;
 
+// Weather info details
+
+const temp = document.querySelector('.temp')
+const enterCity = document.querySelector('.city')
+const weatherDescription = document.querySelector('.weather')
+const imgCountry = document.querySelector('.feature-plan__img-city')
+const imgIconOfWeather = document.querySelector('.weather-info__img-weather')
+
 
 
 
@@ -34,7 +42,7 @@ function getDataFromApi(e) {
     e.preventDefault()
 
     const inputDestinationValue = inputDestination.value;
-
+    enterCity.innerHTML = inputDestination.value;
 
     if (inputDestinationValue === '') {
         warning.textContent = "😊 Please, enter your a travel destination ✈️ and the start date for travel 📅";
@@ -59,8 +67,8 @@ function getDataFromApi(e) {
                         const latitude = data.geonames[0].lat;
                         const longitude = data.geonames[0].lng;
                         const country = data.geonames[0].countryName;
-                        const town = data.geonames[0].name
-                        console.log(latitude, longitude, town, country)
+                        // const town = data.geonames[0].name
+                        // console.log(latitude, longitude, town, country)
 
                         //fetching current weather from weatherbit
 
@@ -69,11 +77,11 @@ function getDataFromApi(e) {
                                 .then((res) => res.json())
                                 .then((data) => {
                                     console.log(data)
-                                    let temperature = data.data[0].temp;
-                                    let descriptionOfWeather = data.data[0].weather.description;
-                                    let city = data.data[0].city_name;
-                                    let icon = data.data[0].weather.icon;
-                                    console.log(temperature, descriptionOfWeather, city, icon)
+                                    temp.innerHTML = `${Math.round(data.data[0].temp)}°C`
+                                    weatherDescription.innerHTML = `${data.data[0].weather.description}`;
+                                    // enterCity = `${data.data[0].city_name}`;
+                                    // imgIconOfWeather.src = `${data.data[0].weather.icon}`;
+                                    // console.log(temperature, descriptionOfWeather, city, icon)
                                 })
                         } else {
                             //fetching future weather from weatherbit
@@ -82,10 +90,10 @@ function getDataFromApi(e) {
                                 .then((res) => res.json())
                                 .then((data) => {
                                     console.log(data)
-                                    let temperature = data.data[0].temp;
-                                    let descriptionOfWeather = data.data[0].weather.description;
-                                    let city = data.city_name;
-                                    console.log(temperature, descriptionOfWeather, city)
+                                    temp.innerHTML = `${Math.round(data.data[0].temp)}°C`
+                                    weatherDescription.innerHTML = `${data.data[0].weather.description}`;
+                                    // enterCity = `${data.city_name}`;
+                                    // console.log(temperature, descriptionOfWeather, city)
                                 })
                         }
 
@@ -94,9 +102,10 @@ function getDataFromApi(e) {
                             .then((res) => res.json())
                             .then((data) => {
                                 console.log(data)
-                                const img = data.hits[0].webformatURL;
+                                imgCountry.src = `${data.hits[0].webformatURL}`;
                                 console.log(img);
                             })
+
                     })
 
 
