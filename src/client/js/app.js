@@ -65,21 +65,20 @@ function getDataFromApi(e) {
                                 .then((res) => {
                                     console.log(res)
                                     const temperature = res.data.data[0].temp;
-                                    // temp.innerHTML = `${Math.round(temperature)}°C`
                                     const descWeather = res.data.data[0].weather.description
-                                    // weatherDescription.innerHTML = descWeather;
                                     postData('/add', {
-                                        temp: temperature,
-                                        weatherDescription: descWeather,
-                                    })
-                                    // .then((resFromServer) => {
-                                    //     console.log(resFromServer)
-                                    //     return resFromServer
-                                    // })
-                                    // .then((res) => {
-                                    //     console.log(res)
-                                    //     updateUI();
-                                    // })
+                                            temp: temperature,
+                                            weatherDescription: descWeather,
+                                        })
+                                        .then((res) => {
+                                            const responeJson = res.json();
+                                            console.log(res)
+                                            return responeJson
+                                        })
+                                        .then((res) => {
+                                            console.log(res)
+                                            updateUI();
+                                        })
                                 })
                         } else {
                             //fetching future weather from weatherbit
