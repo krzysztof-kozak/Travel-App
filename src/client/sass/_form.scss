@@ -2,6 +2,14 @@
 
 .main-form {
     margin: 2rem;
+
+    &__warming {
+        margin-top: 1rem;
+        text-align: center;
+        font-family: 'Roboto';
+        font-weight: 300;
+        color: $sunglow;
+    }
 }
 
 

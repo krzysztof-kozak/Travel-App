@@ -57,7 +57,7 @@ function getDataFromApi(e) {
                         const country = res.data.geonames[0].countryName;
                         showItem()
                         //fetching current weather from weatherbit
-                        if (days === -1) {
+                        if (days === -1 || days === 0) {
                             axios.get(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                                 .then((res) => {
                                     const temperature = res.data.data[0].temp;
@@ -158,7 +158,7 @@ function alertFn() {
 }
 // alert more days 
 function alertFnDays() {
-    alert("Sorry, but this app only covers weather 16 days in advance. Please enter a valid date.");
+    alert("🗓️ Sorry, but this app only covers weather 16 days in advance.\n Please enter a valid date. 🙈");
 }
 
 
