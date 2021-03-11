@@ -2,34 +2,27 @@ const inputDestination = document.querySelector('.form__input-search');
 const btnSubmitForm = document.querySelector('.form__input-submit');
 const warning = document.querySelector('.warning__text');
 const btnDelete = document.querySelector('.btn-delete');
-
 //Global variable for coundown date
 const eventDay = document.querySelector('#event-day');
 const eventMonth = document.querySelector('#event-month');
 const eventYear = document.querySelector('#event-year');
-
 const daysCount = document.querySelector('.days-count');
 const hoursCount = document.querySelector('.hours-count');
 const minutesCount = document.querySelector('.minutes-count');
 const secondsCount = document.querySelector('.seconds-count');
-
 const counddownTitle = document.querySelector('.countdown__title')
 const timeCards = document.querySelector('.time-cards')
-
-// coundown how soon the trip is
 let usersTime;
 let differenceTime;
+let currentTime;
 
 // Weather info details
-
 const temp = document.querySelector('.temp')
 const enterCity = document.querySelector('.city')
 const weatherDescription = document.querySelector('.weather')
 const imgCountry = document.querySelector('.feature-plan__img-city')
-// const imgIconOfWeather = document.querySelector('.weather-info__img-weather')
 
 // Api keys for submission purpose
-
 const geonamesUsername = 'karolina'
 const pixabayApiKey = '20598717-3c4f9262e5a960e1db9ad6571'
 const weatherbitApiKey = '72fa43f538bb4b0eb570bfa7cfc92a4b'
@@ -40,10 +33,8 @@ const weatherbitApiKey = '72fa43f538bb4b0eb570bfa7cfc92a4b'
 //what we need latitude, longitude, country
 function getDataFromApi(e) {
     e.preventDefault()
-
     const inputDestinationValue = inputDestination.value;
     enterCity.innerHTML = inputDestination.value;
-
     if (inputDestinationValue === '') {
         alertFn()
         return false;
@@ -57,8 +48,6 @@ function getDataFromApi(e) {
                 const geonamesUsername = keys.geonamesUsername;
                 const weatherbitApiKey = keys.weatherbitApiKey;
                 const pixabayApiKey = keys.pixabayApiKey;
-
-
                 //fetching lat and lng from geonames api
                 fetch(`http://api.geonames.org/searchJSON?q=${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
                     .then((res) => res.json())
@@ -69,17 +58,16 @@ function getDataFromApi(e) {
                         const country = data.geonames[0].countryName;
                         // console.log(latitude, longitude, town, country)
                         showItem()
-                        //fetching current weather from weatherbit
-                        if (differenceTime <= 7) {
+                            //fetching current weather from weatherbit
+                        if (currentTime) {
                             fetch(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                                 .then((res) => res.json())
                                 .then((data) => {
                                     console.log(data)
                                     temp.innerHTML = `${Math.round(data.data[0].temp)}°C`
                                     weatherDescription.innerHTML = `${data.data[0].weather.description}`;
-                                    // imgIconOfWeather.src = `${data.data[0].weather.icon}`;
                                 })
-                        } else {
+                        } else if (differenceTime) {
                             //fetching future weather from weatherbit
                             // predicted weather of the departure date
                             fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
@@ -111,7 +99,7 @@ function getDataFromApi(e) {
 
 //Time calculations for days, hours, minutes, seconds from today`s date to our enter date
 const setTime = () => {
-    const currentTime = new Date();
+    currentTime = new Date();
     //the difference between now and the our enter date 
     differenceTime = usersTime - currentTime;
     // console.log(differenceTime) // millisecond
@@ -136,7 +124,6 @@ const appUpDate = () => {
 }
 
 // show Items
-
 function showItem() {
     counddownTitle.classList.add('active')
     timeCards.classList.add('active')
@@ -174,11 +161,6 @@ setInterval(setTime, 1000)
 
 
 
-//For the test in JEST 
-
-const subtract = (a, b) => a - b;
-
-module.exports = subtract;
 
 export {
     getDataFromApi,

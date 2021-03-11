@@ -15,9 +15,9 @@
 <body>
     <!-- Burger MENU -->
     <button class="burger-btn">
-        <div class="burger-btn__box">
-            <div class="burger-btn__bars"></div>
-        </div>
+        <span class="burger-btn__box">
+            <span class="burger-btn__bars"></span>
+        </span>
     </button>
 
     <nav class="nav">
@@ -33,7 +33,7 @@
             <p class="header__text"> prepare your trip like a pro</p>
         </div>
         <div class="white-block white-block-left"></div>
-        <section id="planYourTrip" class="main-form">
+        <div id="planYourTrip" class="main-form">
             <form class="form">
                 <input class="form__input-search" type="search" placeholder="Where do you want to go?">
                 <table class="date">
@@ -45,24 +45,21 @@
                     <tr>
                         <td><input class="date__day" type="number" id="event-day" min="1" max="31" value="1"></td>
                         <td><input class="date__month" type="number" id="event-month" min="1" max="12" value="1"></td>
-                        <td><input class="date__year" type="number" id="event-year" min="2021" max="2200" maxlength="4"
-                                value="2021"></td>
+                        <td><input class="date__year" type="number" id="event-year" min="2021" max="2200" value="2021">
+                        </td>
                     </tr>
                 </table>
 
                 <input class="form__input-submit" type="submit" value="Search">
             </form>
-            <section class="warning">
-                <p class="warning__text"></p>
-            </section>
-        </section>
+        </div>
     </header>
     <!-- MAIN SECTION -->
     <main class="main">
         <section class="feature-plan wrapper">
 
             <div class="feature-plan__img">
-                <img class="feature-plan__img-city" src="" alt="a picture of the city">
+                <img class="feature-plan__img-city" src="https://pixabay.com/pl/illustrations/afryka-mapa-kontynent-1804896/" alt="a picture of the city">
             </div>
 
             <div class="feature-plan__text">
@@ -88,9 +85,6 @@
                     </div>
                 </div>
                 <div class="weather-info">
-                    <!-- <div class="weather-info__icon">
-                        <img class="weather-info__img-weather" src="" alt="a picture of the weather">
-                    </div> -->
                     <div class="weather-info__details">
                         <div class="temp info"></div>
                         <div class="city info"></div>
@@ -98,7 +92,6 @@
                     </div>
 
                 </div>
-                <!-- <button class="btn-save" type="submit">Save Trip</button> -->
                 <button class="btn-delete" type="submit">Delete Trip</button>
             </div>
 
@@ -108,7 +101,7 @@
     <!-- FOOTER -->
     <footer id='contact' class="footer">
         <p class="footer__paragraph">
-            &copy2021 Coded & Contact
+            &copy;2021 Coded & Contact
             <a href="https://github.com/CarolinaFledgling" class="footer__link">Karolina Kulinska</a>
         </p>
     </footer>
