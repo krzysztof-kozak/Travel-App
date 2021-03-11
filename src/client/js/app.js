@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const inputDestination = document.querySelector('.form__input-search');
 const btnSubmitForm = document.querySelector('.form__input-submit');
 const warning = document.querySelector('.warning__text');
@@ -49,45 +51,42 @@ function getDataFromApi(e) {
                 const weatherbitApiKey = keys.weatherbitApiKey;
                 const pixabayApiKey = keys.pixabayApiKey;
                 //fetching lat and lng from geonames api
-                fetch(`http://api.geonames.org/searchJSON?q=${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
-                    .then((res) => res.json())
-                    .then((data) => {
-                        // console.log(data)
-                        const latitude = data.geonames[0].lat;
-                        const longitude = data.geonames[0].lng;
-                        const country = data.geonames[0].countryName;
+                axios.get(`http://api.geonames.org/searchJSON?q=${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
+                    .then((res) => {
+                        console.log(res)
+                        const latitude = res.data.geonames[0].lat;
+                        const longitude = res.data.geonames[0].lng;
+                        const country = res.data.geonames[0].countryName;
                         // console.log(latitude, longitude, town, country)
                         showItem()
                             //fetching current weather from weatherbit
                         if (currentTime) {
-                            fetch(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
-                                .then((res) => res.json())
-                                .then((data) => {
-                                    console.log(data)
-                                    temp.innerHTML = `${Math.round(data.data[0].temp)}°C`
-                                    weatherDescription.innerHTML = `${data.data[0].weather.description}`;
+                            axios.get(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
+                                .then((res) => {
+                                    console.log(res)
+                                    const temperature = res.data.data[0].temp;
+                                    temp.innerHTML = `${Math.round(temperature)}°C`
+                                    const descWeather = res.data.data[0].weather.description
+                                    weatherDescription.innerHTML = descWeather;
                                 })
-                        } else if (differenceTime) {
+                        } else {
                             //fetching future weather from weatherbit
                             // predicted weather of the departure date
-                            fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
-                                .then((res) => res.json())
-                                .then((data) => {
-                                    console.log(data)
-                                    temp.innerHTML = `${Math.round(data.data[0].temp)}°C`
-                                    weatherDescription.innerHTML = `${data.data[0].weather.description}`;
+                            axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
+                                .then((res) => {
+                                    console.log(res)
+                                    temp.innerHTML = `${Math.round(res.data.data[0].temp)}°C`
+                                    weatherDescription.innerHTML = `${res.data.data[0].weather.description}`;
                                 })
                         }
 
                         //fetching pixabay image
-                        fetch(`https://pixabay.com/api/?key=${pixabayApiKey}&q=${country}&orientation=horizontal&category=buildings&per_page=3`)
-                            .then((res) => res.json())
-                            .then((data) => {
-                                console.log(data)
-                                imgCountry.src = `${data.hits[0].webformatURL}`;
+                        axios.get(`https://pixabay.com/api/?key=${pixabayApiKey}&q=${country}&orientation=horizontal&category=buildings&per_page=3`)
+                            .then((res) => {
+                                console.log(res)
+                                imgCountry.src = `${res.data.hits[0].webformatURL}`;
 
                             })
-
                     })
             })
             .catch((err) => {
@@ -124,7 +123,8 @@ const appUpDate = () => {
 }
 
 // show Items
-function showItem() {
+
+const showItem = () => {
     counddownTitle.classList.add('active')
     timeCards.classList.add('active')
     btnDelete.classList.add('active')
@@ -133,7 +133,7 @@ function showItem() {
 
 
 //Delete trip 
-function cleanUp() {
+const cleanUp = () => {
     temp.innerHTML = "";
     weatherDescription.innerHTML = "";
     imgCountry.src = "";
@@ -143,7 +143,6 @@ function cleanUp() {
     timeCards.classList.remove('active');
     btnDelete.classList.remove('active')
     imgCountry.classList.remove('active')
-
 }
 
 
