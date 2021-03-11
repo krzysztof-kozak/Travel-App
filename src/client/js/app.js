@@ -2,7 +2,6 @@ const axios = require('axios');
 
 const inputDestination = document.querySelector('.form__input-search');
 const btnSubmitForm = document.querySelector('.form__input-submit');
-const warning = document.querySelector('.warning__text');
 const btnDelete = document.querySelector('.btn-delete');
 //Global variable for coundown date
 const eventDay = document.querySelector('#event-day');
@@ -14,9 +13,11 @@ const minutesCount = document.querySelector('.minutes-count');
 const secondsCount = document.querySelector('.seconds-count');
 const counddownTitle = document.querySelector('.countdown__title')
 const timeCards = document.querySelector('.time-cards')
+const warning = document.querySelector('.main-form__warming')
 let usersTime;
 let differenceTime;
 let currentTime;
+let days;
 
 // Weather info details
 const temp = document.querySelector('.temp')
@@ -60,7 +61,7 @@ function getDataFromApi(e) {
                         // console.log(latitude, longitude, town, country)
                         showItem()
                         //fetching current weather from weatherbit
-                        if (differenceTime <= 7) {
+                        if (days === -1) {
                             axios.get(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                                 .then((res) => {
                                     console.log(res)
@@ -80,15 +81,19 @@ function getDataFromApi(e) {
                                             updateUI();
                                         })
                                 })
-                        } else {
+                        } else if (days >= 1 && days <= 16) {
                             //fetching future weather from weatherbit
                             // predicted weather of the departure date
                             axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                                 .then((res) => {
                                     console.log(res)
-                                    temp.innerHTML = `${Math.round(res.data.data[0].temp)}°C`
-                                    weatherDescription.innerHTML = `${res.data.data[0].weather.description}`;
+                                    temp.innerHTML = `${Math.round(res.data.data[days].temp)}°C`
+                                    weatherDescription.innerHTML = `${res.data.data[days].weather.description}`;
                                 })
+                        } else {
+                            alertFnDays()
+                            cleanUp()
+                            return false;
                         }
 
                         //fetching pixabay image
@@ -102,6 +107,7 @@ function getDataFromApi(e) {
             })
             .catch((err) => {
                 console.log(err, 'something went wrong')
+                warning.textContent = "We are sorry but something went wrong";
             })
     }
 }
@@ -115,7 +121,7 @@ const setTime = () => {
     // console.log(differenceTime) // millisecond
 
     //1000 milisecond is 1 seconds , 1 minutes is 60 seconds , 1 hour is 60 minutes  1 day is 24 hours
-    const days = Math.floor(differenceTime / 1000 / 60 / 60 / 24);
+    days = Math.floor(differenceTime / 1000 / 60 / 60 / 24);
     const hours = Math.floor(differenceTime / 1000 / 60 / 60) % 24;
     const minutes = Math.floor(differenceTime / 1000 / 60) % 60;
     const seconds = Math.floor(differenceTime / 1000) % 60;
@@ -148,7 +154,6 @@ const cleanUp = () => {
     temp.innerHTML = "";
     weatherDescription.innerHTML = "";
     imgCountry.src = "";
-    warning.textContent = "";
     enterCity.innerHTML = "";
     counddownTitle.classList.remove('active');
     timeCards.classList.remove('active');
@@ -160,6 +165,10 @@ const cleanUp = () => {
 // alert 
 function alertFn() {
     alert("😊 Please, enter your a travel destination ✈️ and the start date for travel 📅");
+}
+// alert more days 
+function alertFnDays() {
+    alert("Sorry, but this app only covers weather 16 days in advance. Please enter a valid date.");
 }
 
 
@@ -191,15 +200,10 @@ const updateUI = () => {
         .then(res => res.json())
         .then((json) => {
             console.log(json)
-            temp.innerHTML = `${Math.round(json.temperature)}°C`
-            weatherDescription.innerHTML = json.descWeather;
+            temp.innerHTML = `${Math.round(json.temp)}°C`
+            weatherDescription.innerHTML = json.weatherDescription;
         })
 }
-
-
-
-
-
 
 
 
