@@ -17,6 +17,13 @@ body {
     font-weight: 400;
 }
 
+.main {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+}
 
 .wrapper {
     margin: 0 auto;

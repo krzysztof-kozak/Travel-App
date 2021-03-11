@@ -59,15 +59,27 @@ function getDataFromApi(e) {
                         const country = res.data.geonames[0].countryName;
                         // console.log(latitude, longitude, town, country)
                         showItem()
-                            //fetching current weather from weatherbit
-                        if (currentTime) {
+                        //fetching current weather from weatherbit
+                        if (differenceTime <= 7) {
                             axios.get(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                                 .then((res) => {
                                     console.log(res)
                                     const temperature = res.data.data[0].temp;
-                                    temp.innerHTML = `${Math.round(temperature)}°C`
+                                    // temp.innerHTML = `${Math.round(temperature)}°C`
                                     const descWeather = res.data.data[0].weather.description
-                                    weatherDescription.innerHTML = descWeather;
+                                    // weatherDescription.innerHTML = descWeather;
+                                    postData('/add', {
+                                        temp: temperature,
+                                        weatherDescription: descWeather,
+                                    })
+                                    // .then((resFromServer) => {
+                                    //     console.log(resFromServer)
+                                    //     return resFromServer
+                                    // })
+                                    // .then((res) => {
+                                    //     console.log(res)
+                                    //     updateUI();
+                                    // })
                                 })
                         } else {
                             //fetching future weather from weatherbit
@@ -157,6 +169,38 @@ btnSubmitForm.addEventListener('click', appUpDate)
 btnDelete.addEventListener('click', cleanUp)
 
 setInterval(setTime, 1000)
+
+
+
+// Function post date to my server 
+
+function postData(url, data) {
+    return fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(data) // strinfigify convert object into a string 
+    });
+};
+
+//  Function updateUI
+
+const updateUI = () => {
+    fetch('/all')
+        .then(res => res.json())
+        .then((json) => {
+            console.log(json)
+            temp.innerHTML = `${Math.round(json.temperature)}°C`
+            weatherDescription.innerHTML = json.descWeather;
+        })
+}
+
+
+
+
+
 
 
 

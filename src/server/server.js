@@ -64,8 +64,25 @@ function sendApiKey(req, res) {
     res.send(console.log('hello I`m your APi Keys '))
 }
 
+// Post route 
 
+app.post('/add', postData);
 
+function postData(req, res) {
+    projectData = req.body;
+    res.send({
+        message: 'post recived'
+    });
+    console.log('dane z Frontu', projectData)
+}
+
+//GET route
+app.get('/all', sendData);
+
+function sendData(req, res) {
+    res.send(projectData)
+    res.send(console.log('hello'))
+}
 
 
 
