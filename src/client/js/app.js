@@ -206,8 +206,6 @@ const updateUI = () => {
 }
 
 
-
-
 export {
     getDataFromApi,
     appUpDate,
