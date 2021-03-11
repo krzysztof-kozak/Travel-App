@@ -1,5 +1,4 @@
 const axios = require('axios');
-
 const inputDestination = document.querySelector('.form__input-search');
 const btnSubmitForm = document.querySelector('.form__input-submit');
 const btnDelete = document.querySelector('.btn-delete');
@@ -47,24 +46,20 @@ function getDataFromApi(e) {
         fetch('/api_data')
             .then((res) => res.json())
             .then((keys) => {
-                console.log(keys)
                 const geonamesUsername = keys.geonamesUsername;
                 const weatherbitApiKey = keys.weatherbitApiKey;
                 const pixabayApiKey = keys.pixabayApiKey;
                 //fetching lat and lng from geonames api
                 axios.get(`http://api.geonames.org/searchJSON?q=${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
                     .then((res) => {
-                        console.log(res)
                         const latitude = res.data.geonames[0].lat;
                         const longitude = res.data.geonames[0].lng;
                         const country = res.data.geonames[0].countryName;
-                        // console.log(latitude, longitude, town, country)
                         showItem()
                         //fetching current weather from weatherbit
                         if (days === -1) {
                             axios.get(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                                 .then((res) => {
-                                    console.log(res)
                                     const temperature = res.data.data[0].temp;
                                     const descWeather = res.data.data[0].weather.description
                                     postData('/add', {
@@ -73,11 +68,9 @@ function getDataFromApi(e) {
                                         })
                                         .then((res) => {
                                             const responeJson = res.json();
-                                            console.log(res)
                                             return responeJson
                                         })
                                         .then((res) => {
-                                            console.log(res)
                                             updateUI();
                                         })
                                 })
@@ -86,7 +79,6 @@ function getDataFromApi(e) {
                             // predicted weather of the departure date
                             axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                                 .then((res) => {
-                                    console.log(res)
                                     temp.innerHTML = `${Math.round(res.data.data[days].temp)}°C`
                                     weatherDescription.innerHTML = `${res.data.data[days].weather.description}`;
                                 })
@@ -99,7 +91,6 @@ function getDataFromApi(e) {
                         //fetching pixabay image
                         axios.get(`https://pixabay.com/api/?key=${pixabayApiKey}&q=${country}&orientation=horizontal&category=buildings&per_page=3`)
                             .then((res) => {
-                                console.log(res)
                                 imgCountry.src = `${res.data.hits[0].webformatURL}`;
 
                             })
@@ -118,7 +109,7 @@ const setTime = () => {
     currentTime = new Date();
     //the difference between now and the our enter date 
     differenceTime = usersTime - currentTime;
-    // console.log(differenceTime) // millisecond
+    //differenceTime is millisecond
 
     //1000 milisecond is 1 seconds , 1 minutes is 60 seconds , 1 hour is 60 minutes  1 day is 24 hours
     days = Math.floor(differenceTime / 1000 / 60 / 60 / 24);
@@ -140,7 +131,6 @@ const appUpDate = () => {
 }
 
 // show Items
-
 const showItem = () => {
     counddownTitle.classList.add('active')
     timeCards.classList.add('active')
@@ -181,7 +171,6 @@ setInterval(setTime, 1000)
 
 
 // Function post date to my server 
-
 function postData(url, data) {
     return fetch(url, {
         method: 'POST',
@@ -194,12 +183,10 @@ function postData(url, data) {
 };
 
 //  Function updateUI
-
 const updateUI = () => {
     fetch('/all')
         .then(res => res.json())
         .then((json) => {
-            console.log(json)
             temp.innerHTML = `${Math.round(json.temp)}°C`
             weatherDescription.innerHTML = json.weatherDescription;
         })
@@ -211,4 +198,3 @@ export {
     appUpDate,
     setTime,
 }
-
