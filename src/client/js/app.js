@@ -124,10 +124,13 @@ const setTime = () => {
 
 }
 
+let intervalId;
 const appUpDate = () => {
     //our enter date 
     usersTime = new Date(`${eventMonth.value} ${eventDay.value} ${eventYear.value}`)
     setTime();
+    clearInterval(intervalId);
+    intervalId = setInterval(setTime, 1000);
 }
 
 // show Items
@@ -149,25 +152,18 @@ const cleanUp = () => {
     timeCards.classList.remove('active');
     btnDelete.classList.remove('active')
     imgCountry.classList.remove('active')
+
 }
 
 
-// alert 
+// alert NO destination
 function alertFn() {
     alert("😊 Please, enter your a travel destination ✈️ and the start date for travel 📅");
 }
-// alert more days 
+// alert with days
 function alertFnDays() {
     alert("🗓️ Sorry, but this app only covers weather 16 days in advance.\n Please enter a valid date. 🙈");
 }
-
-
-btnSubmitForm.addEventListener('click', getDataFromApi)
-btnSubmitForm.addEventListener('click', appUpDate)
-btnDelete.addEventListener('click', cleanUp)
-
-setInterval(setTime, 1000)
-
 
 
 // Function post date to my server 
@@ -193,8 +189,20 @@ const updateUI = () => {
 }
 
 
+
+function start() {
+    btnSubmitForm.addEventListener('click', getDataFromApi)
+    btnSubmitForm.addEventListener('click', appUpDate)
+    btnDelete.addEventListener('click', cleanUp)
+}
+
+
+
 export {
+    start,
     getDataFromApi,
     appUpDate,
     setTime,
+    alertFn,
+    alertFnDays,
 }
