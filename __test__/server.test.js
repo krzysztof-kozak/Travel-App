@@ -1,11 +1,10 @@
+const request = require("supertest");
+const app = require("../src/server/server")
 
-import {
-    app
-} from '../src/server/server'
-
-
-describe('check if app defined', () => {
-    test('check if app defined', () => {
-        expect(app).toBeDefined();
-    })
-})
+describe("Test the root path", () => {
+    test("It should response the GET method", () => {
+      return request(app)
+        .get("/")
+        .expect(200);
+    });
+  });

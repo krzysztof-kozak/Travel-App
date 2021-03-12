@@ -22,6 +22,7 @@ app.use(express.static('dist'));
 
 const port = 3000;
 const server = app.listen(port, listening);
+
 function listening() {
     // console.log(server);
     console.log(`running on localhost: ${port}`);
@@ -48,12 +49,13 @@ function sendApiKey(req, res) {
         weatherbitApiKey: weatherbitApiKey,
         pixabayApiKey: pixabayApiKey,
     })
-    res.send(console.log('hello I`m your APi Keys '))
+    res.send(console.log('hello I`m your APi Keys '));
 }
 
 // Post route 
 
 app.post('/add', postData);
+
 function postData(req, res) {
     projectData = req.body;
     res.send({
@@ -64,13 +66,18 @@ function postData(req, res) {
 
 //GET route
 app.get('/all', sendData);
+
 function sendData(req, res) {
     res.send(projectData)
     res.send(console.log('hello'))
 }
 
 
+// for test in JEST 
+app.get("/", (req, res) => {
+    res.status(200).send("Hello World!");
+  });
 
-module.exports = {
-    app
-}
+
+
+module.exports = app
