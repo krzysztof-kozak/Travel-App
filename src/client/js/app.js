@@ -43,12 +43,11 @@ function getDataFromApi(e) {
 
     } else {
         // receive api key from server side
-        fetch('/api_data')
-            .then((res) => res.json())
-            .then((keys) => {
-                const geonamesUsername = keys.geonamesUsername;
-                const weatherbitApiKey = keys.weatherbitApiKey;
-                const pixabayApiKey = keys.pixabayApiKey;
+        axios('/api_data')
+            .then((data) => {
+                const geonamesUsername = data.geonamesUsername;
+                const weatherbitApiKey = data.weatherbitApiKey;
+                const pixabayApiKey = data.pixabayApiKey;
                 //fetching lat and lng from geonames api
                 axios.get(`http://api.geonames.org/searchJSON?q=${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
                     .then((res) => {
@@ -190,11 +189,10 @@ const updateUI = () => {
 
 
 
-function start() {
-    btnSubmitForm.addEventListener('click', getDataFromApi)
-    btnSubmitForm.addEventListener('click', appUpDate)
-    btnDelete.addEventListener('click', cleanUp)
-}
+btnSubmitForm.addEventListener('click', getDataFromApi)
+btnSubmitForm.addEventListener('click', appUpDate)
+btnDelete.addEventListener('click', cleanUp)
+
 
 
 
