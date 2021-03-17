@@ -24,10 +24,7 @@ const enterCity = document.querySelector('.city')
 const weatherDescription = document.querySelector('.weather')
 const imgCountry = document.querySelector('.feature-plan__img-city')
 
-// Api keys for submission purpose
-const geonamesUsername = 'karolina'
-const pixabayApiKey = '20598717-3c4f9262e5a960e1db9ad6571'
-const weatherbitApiKey = '72fa43f538bb4b0eb570bfa7cfc92a4b'
+
 
 
 
