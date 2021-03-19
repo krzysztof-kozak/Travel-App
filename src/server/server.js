@@ -28,11 +28,12 @@ function listening() {
     console.log(`running on localhost: ${port}`);
 };
 
+const username='karolina89'
 
 // API INFO
 const dotenv = require('dotenv');
 dotenv.config();
-console.log(`Your username is ${process.env.geonamesUserName}`);
+console.log(`Your username is ${username}`);
 console.log(`Your API key from weatherBit is ${process.env.weatherbitApiKey}`);
 console.log(`Your API key from pixabay ${process.env.pixabayApiKey}`);
 
@@ -79,5 +80,4 @@ app.get("/", (req, res) => {
   });
 
 
-
-module.exports = app
+  module.exports = app
