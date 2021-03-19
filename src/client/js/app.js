@@ -13,10 +13,9 @@ const secondsCount = document.querySelector('.seconds-count');
 const counddownTitle = document.querySelector('.countdown__title')
 const timeCards = document.querySelector('.time-cards')
 const warning = document.querySelector('.main-form__warming')
-let usersTime;
-let differenceTime;
-let currentTime;
-let days;
+
+// id interval Coundown seconds 
+let intervalId;
 
 // Weather info details
 const temp = document.querySelector('.temp')
@@ -43,7 +42,11 @@ function getDataFromApi(e) {
     fetch('/api_data')
         .then((res) => res.json())
         .then((keys) => {
-            const { geonamesUsername, weatherbitApiKey, pixabayApiKey } = keys
+            const {
+                geonamesUsername,
+                weatherbitApiKey,
+                pixabayApiKey
+            } = keys
             //fetching lat and lng from geonames api
             axios.get(`http://api.geonames.org/searchJSON?q=${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
                 .then((res) => {
@@ -51,6 +54,9 @@ function getDataFromApi(e) {
                     const longitude = res.data.geonames[0].lng;
                     const country = res.data.geonames[0].countryName;
                     showItem()
+                    const {
+                        days
+                    } = getTime()
                     //fetching current weather from weatherbit
                     if (days === -1 || days === 0) {
                         axios.get(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
@@ -100,18 +106,38 @@ function getDataFromApi(e) {
 }
 
 
-//Time calculations for days, hours, minutes, seconds from today`s date to our enter date
-const setTime = () => {
-    currentTime = new Date();
+const getTime = () => {
+    const currentTime = new Date();
     //the difference between now and the our enter date 
-    differenceTime = usersTime - currentTime;
+    const differenceTime = getUserTime() - currentTime;
     //differenceTime is millisecond
 
     //1000 milisecond is 1 seconds , 1 minutes is 60 seconds , 1 hour is 60 minutes  1 day is 24 hours
-    days = Math.floor(differenceTime / 1000 / 60 / 60 / 24);
+    const days = Math.floor(differenceTime / 1000 / 60 / 60 / 24);
     const hours = Math.floor(differenceTime / 1000 / 60 / 60) % 24;
     const minutes = Math.floor(differenceTime / 1000 / 60) % 60;
     const seconds = Math.floor(differenceTime / 1000) % 60;
+
+    return {
+        days,
+        hours,
+        minutes,
+        seconds,
+        currentTime,
+    }
+
+
+}
+
+
+//Time calculations for days, hours, minutes, seconds from today`s date to our enter date
+const setTime = () => {
+    const {
+        days,
+        hours,
+        minutes,
+        seconds,
+    } = getTime()
 
     daysCount.textContent = days;
     hoursCount.textContent = hours;
@@ -120,10 +146,13 @@ const setTime = () => {
 
 }
 
-let intervalId;
+
+const getUserTime = () => {
+    return new Date(`${eventMonth.value} ${eventDay.value} ${eventYear.value}`)
+}
+
+
 const appUpDate = () => {
-    //our enter date 
-    usersTime = new Date(`${eventMonth.value} ${eventDay.value} ${eventYear.value}`)
     setTime();
     clearInterval(intervalId);
     intervalId = setInterval(setTime, 1000);
