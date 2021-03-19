@@ -40,12 +40,12 @@ function getDataFromApi(e) {
         return false;
     }
     // receive api key from server side
-    axios('/api_data')
-        .then((data) => {
-            const geonamesUsername = data.geonamesUsername;
-            const weatherbitApiKey = data.weatherbitApiKey;
-            const pixabayApiKey = data.pixabayApiKey;
-
+    fetch('/api_data')
+        .then((res) => res.json())
+        .then((keys) => {
+            const geonamesUsername = keys.geonamesUsername;
+            const weatherbitApiKey = keys.weatherbitApiKey;
+            const pixabayApiKey = keys.pixabayApiKey
             // const { geonamesUsername, weatherbitApiKey, pixabayApiKey } = data
             //fetching lat and lng from geonames api
             axios.get(`http://api.geonames.org/searchJSON?q=${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
