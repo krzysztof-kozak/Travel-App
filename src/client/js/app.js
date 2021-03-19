@@ -1,31 +1,26 @@
+import {
+    getTime,
+    setTime,
+    getUserTimeFromForm,
+    appUpTime
+} from './getTime'
+
+// import {
+//     cleanUp
+// } from './cleanUp'
+
 const axios = require('axios');
 const inputDestination = document.querySelector('.form__input-search');
 const btnSubmitForm = document.querySelector('.form__input-submit');
 const btnDelete = document.querySelector('.btn-delete');
-//Global variable for coundown date
-const eventDay = document.querySelector('#event-day');
-const eventMonth = document.querySelector('#event-month');
-const eventYear = document.querySelector('#event-year');
-const daysCount = document.querySelector('.days-count');
-const hoursCount = document.querySelector('.hours-count');
-const minutesCount = document.querySelector('.minutes-count');
-const secondsCount = document.querySelector('.seconds-count');
 const counddownTitle = document.querySelector('.countdown__title')
 const timeCards = document.querySelector('.time-cards')
 const warning = document.querySelector('.main-form__warming')
-
-// id interval Coundown seconds 
-let intervalId;
-
 // Weather info details
 const temp = document.querySelector('.temp')
 const enterCity = document.querySelector('.city')
 const weatherDescription = document.querySelector('.weather')
 const imgCountry = document.querySelector('.feature-plan__img-city')
-
-
-
-
 
 // API geonames api
 //what we need latitude, longitude, country
@@ -106,57 +101,6 @@ function getDataFromApi(e) {
 }
 
 
-const getTime = () => {
-    const currentTime = new Date();
-    //the difference between now and the our enter date 
-    const differenceTime = getUserTime() - currentTime;
-    //differenceTime is millisecond
-
-    //1000 milisecond is 1 seconds , 1 minutes is 60 seconds , 1 hour is 60 minutes  1 day is 24 hours
-    const days = Math.floor(differenceTime / 1000 / 60 / 60 / 24);
-    const hours = Math.floor(differenceTime / 1000 / 60 / 60) % 24;
-    const minutes = Math.floor(differenceTime / 1000 / 60) % 60;
-    const seconds = Math.floor(differenceTime / 1000) % 60;
-
-    return {
-        days,
-        hours,
-        minutes,
-        seconds,
-        currentTime,
-    }
-
-
-}
-
-
-//Time calculations for days, hours, minutes, seconds from today`s date to our enter date
-const setTime = () => {
-    const {
-        days,
-        hours,
-        minutes,
-        seconds,
-    } = getTime()
-
-    daysCount.textContent = days;
-    hoursCount.textContent = hours;
-    minutesCount.textContent = minutes;
-    secondsCount.textContent = seconds;
-
-}
-
-
-const getUserTime = () => {
-    return new Date(`${eventMonth.value} ${eventDay.value} ${eventYear.value}`)
-}
-
-
-const appUpDate = () => {
-    setTime();
-    clearInterval(intervalId);
-    intervalId = setInterval(setTime, 1000);
-}
 
 // show Items
 const showItem = () => {
@@ -166,19 +110,6 @@ const showItem = () => {
     imgCountry.classList.add('active')
 }
 
-
-//Delete trip 
-const cleanUp = () => {
-    temp.innerHTML = "";
-    weatherDescription.innerHTML = "";
-    imgCountry.src = "";
-    enterCity.innerHTML = "";
-    counddownTitle.classList.remove('active');
-    timeCards.classList.remove('active');
-    btnDelete.classList.remove('active')
-    imgCountry.classList.remove('active')
-
-}
 
 
 // alert NO destination
@@ -191,6 +122,18 @@ const alertFn = () => {
 
 const alertMoreDays = () => {
     alert("🗓️ Sorry, but this app only covers weather 16 days in advance.\n Please enter a valid date. 🙈");
+}
+
+//Delete info about trip ( chciałam to tez dać do osobnego pliku cleanup.js i zaimportowac ale nie działa )
+export const cleanUp = () => {
+    temp.innerHTML = "";
+    weatherDescription.innerHTML = "";
+    imgCountry.src = "";
+    enterCity.innerHTML = "";
+    counddownTitle.classList.remove('active');
+    timeCards.classList.remove('active');
+    btnDelete.classList.remove('active')
+    imgCountry.classList.remove('active')
 }
 
 
@@ -220,7 +163,7 @@ const updateUI = () => {
 
 
 btnSubmitForm.addEventListener('click', getDataFromApi)
-btnSubmitForm.addEventListener('click', appUpDate)
+btnSubmitForm.addEventListener('click', appUpTime)
 btnDelete.addEventListener('click', cleanUp)
 
 
@@ -228,8 +171,6 @@ btnDelete.addEventListener('click', cleanUp)
 
 export {
     getDataFromApi,
-    appUpDate,
-    setTime,
     alertFn,
     alertMoreDays,
 }
