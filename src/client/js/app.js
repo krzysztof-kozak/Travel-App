@@ -1,30 +1,32 @@
 import {
     getTime,
-    setTime,
-    getUserTimeFromForm,
     appUpTime
 } from './getTime'
 
-// import {
-//     cleanUp
-// } from './cleanUp'
+import {
+    cleanUp
+} from './cleanUp'
+
+import {
+    alertFn,
+    alertMoreDays
+} from './alertFunctions'
 
 const axios = require('axios');
 const inputDestination = document.querySelector('.form__input-search');
 const btnSubmitForm = document.querySelector('.form__input-submit');
-const btnDelete = document.querySelector('.btn-delete');
-const counddownTitle = document.querySelector('.countdown__title')
-const timeCards = document.querySelector('.time-cards')
+export const btnDelete = document.querySelector('.btn-delete');
+export const counddownTitle = document.querySelector('.countdown__title')
+export const timeCards = document.querySelector('.time-cards')
 const warning = document.querySelector('.main-form__warming')
 // Weather info details
-const temp = document.querySelector('.temp')
-const enterCity = document.querySelector('.city')
-const weatherDescription = document.querySelector('.weather')
-const imgCountry = document.querySelector('.feature-plan__img-city')
+export const temp = document.querySelector('.temp')
+export const enterCity = document.querySelector('.city')
+export const weatherDescription = document.querySelector('.weather')
+export const imgCountry = document.querySelector('.feature-plan__img-city')
 
-// API geonames api
-//what we need latitude, longitude, country
-function getDataFromApi(e) {
+
+export function getDataFromApi(e) {
     e.preventDefault()
     const inputDestinationValue = inputDestination.value;
     enterCity.innerHTML = inputDestination.value;
@@ -111,33 +113,6 @@ const showItem = () => {
 }
 
 
-
-// alert NO destination
-const alertFn = () => {
-    alert("😊 Please, enter your a travel destination ✈️ and the start date for travel 📅");
-}
-
-
-// alert with days
-
-const alertMoreDays = () => {
-    alert("🗓️ Sorry, but this app only covers weather 16 days in advance.\n Please enter a valid date. 🙈");
-}
-
-//Delete info about trip ( chciałam to tez dać do osobnego pliku cleanup.js i zaimportowac ale nie działa )
-export const cleanUp = () => {
-    temp.innerHTML = "";
-    weatherDescription.innerHTML = "";
-    imgCountry.src = "";
-    enterCity.innerHTML = "";
-    counddownTitle.classList.remove('active');
-    timeCards.classList.remove('active');
-    btnDelete.classList.remove('active')
-    imgCountry.classList.remove('active')
-}
-
-
-
 // Function post date to my server 
 function postData(url, data) {
     return fetch(url, {
@@ -165,12 +140,3 @@ const updateUI = () => {
 btnSubmitForm.addEventListener('click', getDataFromApi)
 btnSubmitForm.addEventListener('click', appUpTime)
 btnDelete.addEventListener('click', cleanUp)
-
-
-
-
-export {
-    getDataFromApi,
-    alertFn,
-    alertMoreDays,
-}
