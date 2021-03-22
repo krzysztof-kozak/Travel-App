@@ -25,6 +25,13 @@ export const enterCity = document.querySelector('.city')
 export const weatherDescription = document.querySelector('.weather')
 export const imgCountry = document.querySelector('.feature-plan__img-city')
 
+// Links From APIs 
+const urlGeonames = 'http://api.geonames.org/searchJSON?q=';
+const urlCurrentWeatherbit = 'https://api.weatherbit.io/v2.0/current?lat=';
+const urlDailytWeatherbit = 'https://api.weatherbit.io/v2.0/forecast/daily?lat=';
+const urlPixabay = 'https://pixabay.com/api/?key=';
+const urlEndPixabay = '&orientation=horizontal&category=buildings&per_page=3';
+
 
 export function getDataFromApi(e) {
     e.preventDefault()
@@ -45,7 +52,7 @@ export function getDataFromApi(e) {
                 pixabayApiKey
             } = keys
             //fetching lat and lng from geonames api
-            axios.get(`http://api.geonames.org/searchJSON?q=${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
+            axios.get(`${urlGeonames}${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
                 .then((res) => {
                     const latitude = res.data.geonames[0].lat;
                     const longitude = res.data.geonames[0].lng;
@@ -56,7 +63,7 @@ export function getDataFromApi(e) {
                     } = getTime()
                     //fetching current weather from weatherbit
                     if (days === -1 || days === 0) {
-                        axios.get(`https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
+                        axios.get(`${urlCurrentWeatherbit}${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                             .then((res) => {
                                 const temperature = res.data.data[0].temp;
                                 const descWeather = res.data.data[0].weather.description
@@ -76,7 +83,7 @@ export function getDataFromApi(e) {
                     } else if (days >= 1 && days <= 16) {
                         //fetching future weather from weatherbit
                         // predicted weather of the departure date
-                        axios.get(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
+                        axios.get(`${urlDailytWeatherbit}${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                             .then((res) => {
                                 temp.innerHTML = `${Math.round(res.data.data[days].temp)}°C`
                                 weatherDescription.innerHTML = `${res.data.data[days].weather.description}`;
@@ -88,7 +95,7 @@ export function getDataFromApi(e) {
                     }
 
                     //fetching pixabay image
-                    axios.get(`https://pixabay.com/api/?key=${pixabayApiKey}&q=${country}&orientation=horizontal&category=buildings&per_page=3`)
+                    axios.get(`${urlPixabay}${pixabayApiKey}&q=${country}${urlEndPixabay}`)
                         .then((res) => {
                             imgCountry.src = `${res.data.hits[0].webformatURL}`;
 
