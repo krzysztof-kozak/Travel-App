@@ -25,6 +25,7 @@ export const enterCity = document.querySelector('.city')
 export const weatherDescription = document.querySelector('.weather')
 export const imgCountry = document.querySelector('.feature-plan__img-city')
 
+
 // Links From APIs 
 const urlGeonames = 'http://api.geonames.org/searchJSON?q=';
 const urlCurrentWeatherbit = 'https://api.weatherbit.io/v2.0/current?lat=';
@@ -105,6 +106,8 @@ export function getDataFromApi(e) {
             console.log(err, 'something went wrong')
             warning.textContent = "We are sorry but something went wrong";
         })
+
+
 }
 
 
@@ -143,7 +146,7 @@ const updateUI = () => {
 // Function updateFields 
 const updateFields = (temperature, descWeather) => {
     temp.innerHTML = `${Math.round(temperature)}°C`
-    weatherDescription.innerHTML = `${descWeather.weather.description}`;
+    weatherDescription.innerHTML = descWeather;
 }
 
 
