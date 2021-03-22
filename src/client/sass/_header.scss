@@ -1,13 +1,12 @@
 // HEADER
 
 .header {
+    grid-area: header;
     position: relative;
     display: flex;
-    justify-content: space-around;
-    // align-items: center;
+    justify-content: space-between;
     flex-direction: column;
     padding: 2em;
-    height: 50vh;
     text-align: center;
     background: $gradient;
 
@@ -21,6 +20,7 @@
     &__text {
         font-style: 1.4rem;
         font-weight: 300;
+        margin-bottom: 1rem;
     }
 
 }
@@ -46,6 +46,7 @@
 
         &__text {
             font-size: 2.2rem;
+
         }
     }
 

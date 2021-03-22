@@ -13,99 +13,102 @@
 </head>
 
 <body>
-    <!-- Burger MENU -->
-    <button class="burger-btn">
-        <span class="burger-btn__box">
-            <span class="burger-btn__bars"></span>
-        </span>
-    </button>
+    <div class="container">
+        <!-- Burger MENU -->
+        <button class="burger-btn">
+            <span class="burger-btn__box">
+                <span class="burger-btn__bars"></span>
+            </span>
+        </button>
 
-    <nav class="nav">
-        <div class="nav__items">
-            <a href="#planYourTrip" class="nav__item">Plan Your Trip</a>
-            <a href="#contact" class="nav__item">Contact</a>
-        </div>
-    </nav>
-    <!-- HEADER -->
-    <header class="header section">
-        <div class="header__text-container">
-            <h1 class="header__heading">Travel Planner</h1>
-            <p class="header__text"> prepare your trip like a pro</p>
-        </div>
-        <div class="white-block white-block-left"></div>
-        <div id="planYourTrip" class="main-form">
-            <form class="form">
-                <input class="form__input-search" type="search" placeholder="Where do you want to go?">
-                <table class="date">
-                    <tr>
-                        <td><label class="date__label" for="event-day">Day</label></td>
-                        <td><label class="date__label" for="event-month">Month</label></td>
-                        <td><label class="date__label" for="event-year">Year</label></td>
-                    </tr>
-                    <tr>
-                        <td><input class="date__day" type="number" id="event-day" min="1" max="31" value="1"></td>
-                        <td><input class="date__month" type="number" id="event-month" min="1" max="12" value="1"></td>
-                        <td><input class="date__year" type="number" id="event-year" min="2021" max="2200" value="2021">
-                        </td>
-                    </tr>
-                </table>
-
-                <input class="form__input-submit" type="submit" value="Search">
-            </form>
-            <p class="main-form__warming"></p>
-        </div>
-    </header>
-    <!-- MAIN SECTION -->
-    <main class="main">
-        <section class="feature-plan wrapper">
-            <div class="feature-plan__img">
-                <img class="feature-plan__img-city"
-                    src="https://pixabay.com/pl/illustrations/afryka-mapa-kontynent-1804896/"
-                    alt="a picture of the city">
+        <nav class="nav">
+            <div class="nav__items">
+                <a href="#planYourTrip" class="nav__item">Plan Your Trip</a>
+                <a href="#contact" class="nav__item">Contact</a>
             </div>
-            <div class="feature-plan__text">
-                <div class="countdown">
-                    <h2 class="countdown__title">How soon the trip is?</h2>
-                    <div class="time-cards">
-                        <div class="card">
-                            <p class="days-count number">1</p>
-                            <p class="card-title">Days</p>
-                        </div>
-                        <div class="card">
-                            <p class="hours-count number">1</p>
-                            <p class="card-title">Hours</p>
-                        </div>
-                        <div class="card">
-                            <p class="minutes-count number">1</p>
-                            <p class="card-title">Minutes</p>
-                        </div>
-                        <div class="card">
-                            <p class="seconds-count number">1</p>
-                            <p class="card-title">Seconds</p>
+        </nav>
+        <!-- HEADER -->
+        <header class="header section">
+            <div class="header__text-container">
+                <h1 class="header__heading">Travel Planner</h1>
+                <p class="header__text"> prepare your trip like a pro</p>
+            </div>
+            <div class="white-block white-block-left"></div>
+            <div id="planYourTrip" class="main-form">
+                <form class="form">
+                    <input class="form__input-search" type="search" placeholder="Where do you want to go?">
+                    <table class="date">
+                        <tr>
+                            <td><label class="date__label" for="event-day">Day</label></td>
+                            <td><label class="date__label" for="event-month">Month</label></td>
+                            <td><label class="date__label" for="event-year">Year</label></td>
+                        </tr>
+                        <tr>
+                            <td><input class="date__day" type="number" id="event-day" min="1" max="31" value="1"></td>
+                            <td><input class="date__month" type="number" id="event-month" min="1" max="12" value="1">
+                            </td>
+                            <td><input class="date__year" type="number" id="event-year" min="2021" max="2200"
+                                    value="2021">
+                            </td>
+                        </tr>
+                    </table>
+
+                    <input class="form__input-submit" type="submit" value="Search">
+                </form>
+                <p class="main-form__warming"></p>
+            </div>
+        </header>
+        <!-- MAIN SECTION -->
+        <main class="main">
+            <section class="feature-plan wrapper">
+                <div class="feature-plan__img">
+                    <img class="feature-plan__img-city"
+                        src="https://pixabay.com/pl/illustrations/afryka-mapa-kontynent-1804896/"
+                        alt="a picture of the city">
+                </div>
+                <div class="feature-plan__text">
+                    <div class="countdown">
+                        <h2 class="countdown__title">How soon the trip is?</h2>
+                        <div class="time-cards">
+                            <div class="card">
+                                <p class="days-count number">1</p>
+                                <p class="card-title">Days</p>
+                            </div>
+                            <div class="card">
+                                <p class="hours-count number">1</p>
+                                <p class="card-title">Hours</p>
+                            </div>
+                            <div class="card">
+                                <p class="minutes-count number">1</p>
+                                <p class="card-title">Minutes</p>
+                            </div>
+                            <div class="card">
+                                <p class="seconds-count number">1</p>
+                                <p class="card-title">Seconds</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="weather-info">
-                    <div class="weather-info__details">
-                        <div class="temp info"></div>
-                        <div class="city info"></div>
-                        <div class="weather info"></div>
+                    <div class="weather-info">
+                        <div class="weather-info__details">
+                            <div class="temp info"></div>
+                            <div class="city info"></div>
+                            <div class="weather info"></div>
+                        </div>
+
                     </div>
-
+                    <button class="btn-delete" type="submit">Delete Trip</button>
                 </div>
-                <button class="btn-delete" type="submit">Delete Trip</button>
-            </div>
-        </section>
+            </section>
 
-    </main>
-    <!-- FOOTER -->
-    <footer id='contact' class="footer">
-        <p class="footer__paragraph">
-            &copy;2021 Coded & Contact
-            <a href="https://github.com/CarolinaFledgling" class="footer__link">Karolina Kulinska</a>
-        </p>
-    </footer>
-    <!-- <script>
+        </main>
+        <!-- FOOTER -->
+        <footer id='contact' class="footer">
+            <p class="footer__paragraph">
+                &copy;2021 Coded & Contact
+                <a href="https://github.com/CarolinaFledgling" class="footer__link">Karolina Kulinska</a>
+            </p>
+        </footer>
+        <!-- <script>
         // Check that service workers are supported
         if ('serviceWorker' in navigator) {
             // Use the window load event to keep the page load performant
@@ -114,6 +117,7 @@
             });
         }
     </script> -->
+    </div>
 </body>
 
 </html>
