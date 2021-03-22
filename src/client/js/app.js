@@ -98,7 +98,6 @@ export function getDataFromApi(e) {
                     axios.get(`${urlPixabay}${pixabayApiKey}&q=${country}${urlEndPixabay}`)
                         .then((res) => {
                             imgCountry.src = `${res.data.hits[0].webformatURL}`;
-
                         })
                 })
         })
@@ -106,7 +105,6 @@ export function getDataFromApi(e) {
             console.log(err, 'something went wrong')
             warning.textContent = "We are sorry but something went wrong";
         })
-
 }
 
 
@@ -142,7 +140,7 @@ const updateUI = () => {
         })
 }
 
-// 
+// Function updateFields 
 const updateFields = (temperature, descWeather) => {
     temp.innerHTML = `${Math.round(temperature)}°C`
     weatherDescription.innerHTML = `${descWeather.weather.description}`;
