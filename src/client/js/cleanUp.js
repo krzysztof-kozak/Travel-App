@@ -5,7 +5,7 @@ import {
     temp,
     enterCity,
     weatherDescription,
-    imgCountry
+    imgCountry,
 } from './app'
 
 
@@ -19,4 +19,5 @@ export const cleanUp = () => {
     timeCards.classList.remove('active');
     btnDelete.classList.remove('active')
     imgCountry.classList.remove('active')
+
 }

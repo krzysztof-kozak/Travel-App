@@ -13,6 +13,7 @@ import {
 } from './alertFunctions'
 
 const axios = require('axios');
+const spinner = document.querySelector('.spinner')
 const inputDestination = document.querySelector('.form__input-search');
 const btnSubmitForm = document.querySelector('.form__input-submit');
 export const btnDelete = document.querySelector('.btn-delete');
@@ -147,6 +148,15 @@ const updateUI = () => {
 const updateFields = (temperature, descWeather) => {
     temp.innerHTML = `${Math.round(temperature)}°C`
     weatherDescription.innerHTML = descWeather;
+}
+
+// show and hide loading 
+const showLoading = () => {
+    spinner.classList.add('spinner--visible')
+}
+
+const hideLoading = () => {
+    spinner.classList.remove('spinner--visible')
 }
 
 
