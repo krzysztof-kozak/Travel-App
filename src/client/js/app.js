@@ -81,12 +81,12 @@ export function getDataFromApi(e) {
                                     })
                             })
                     } else if (days >= 1 && days <= 16) {
-                        //fetching future weather from weatherbit
-                        // predicted weather of the departure date
+                        // fetching predicted weather of the departure date
                         axios.get(`${urlDailytWeatherbit}${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
                             .then((res) => {
-                                temp.innerHTML = `${Math.round(res.data.data[days].temp)}°C`
-                                weatherDescription.innerHTML = `${res.data.data[days].weather.description}`;
+                                const temperature = res.data.data[0].temp;
+                                const descWeather = res.data.data[0].weather.description
+                                updateFields(temperature, descWeather)
                             })
                     } else {
                         alertMoreDays()
@@ -140,6 +140,12 @@ const updateUI = () => {
             temp.innerHTML = `${Math.round(json.temp)}°C`
             weatherDescription.innerHTML = json.weatherDescription;
         })
+}
+
+// 
+const updateFields = (temperature, descWeather) => {
+    temp.innerHTML = `${Math.round(temperature)}°C`
+    weatherDescription.innerHTML = `${descWeather.weather.description}`;
 }
 
 
