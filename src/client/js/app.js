@@ -27,12 +27,12 @@ export const imgCountry = document.querySelector('.feature-plan__img-city');
 
 // Links From APIs 
 
-// dlaczego  consty tutaj są niewidoczne dla funkcji asynch od linijki 92
-// const urlGeonames = 'http://api.geonames.org/searchJSON?q=';
-// const urlCurrentWeatherbit = 'https://api.weatherbit.io/v2.0/current?lat=';
-// const urlDailytWeatherbit = 'https://api.weatherbit.io/v2.0/forecast/daily?lat=';
-// const urlPixabay = 'https://pixabay.com/api/?key=';
-// const urlEndPixabay = '&orientation=horizontal&category=buildings&per_page=3';
+// dalej u mnie sa nie widoczne pomimo zainstalwania paczki 
+const urlGeonames = 'http://api.geonames.org/searchJSON?q=';
+const urlCurrentWeatherbit = 'https://api.weatherbit.io/v2.0/current?lat=';
+const urlDailytWeatherbit = 'https://api.weatherbit.io/v2.0/forecast/daily?lat=';
+const urlPixabay = 'https://pixabay.com/api/?key=';
+const urlEndPixabay = '&orientation=horizontal&category=buildings&per_page=3';
 
 
 export async function getDataFromApi(e) {
@@ -64,21 +64,26 @@ export async function getDataFromApi(e) {
         return
     }
     let weather;
+    const country = location.geonames[0].countryName;
     if (days === -1 || days === 0) {
         weather = await getCurrentWeather({
             latitude: location.geonames[0].lat,
             longitude: location.geonames[0].lng,
-            country: location.geonames[0].countryName,
+            country,
         }, weatherbitApiKey).data[0]
     } else if (days >= 1 && days <= 16) {
         weather = await getPredictedWeather({
             latitude: location.geonames[0].lat,
             longitude: location.geonames[0].lng,
-            country: location.geonames[0].countryName,
+            country,
         }, weatherbitApiKey).data[days - 1]
     }
 
-    const pixabayData = await getImgPixabay(pixabayApiKey, country, weather.temp, weather.weather.description)
+    
+    const pixabayData = await getImgPixabay(pixabayApiKey, country)
+    if (pixabayData && pixabayData.hits && pixabayData.hits.length) {
+        imgCountry.setAttribute('src', pixabayData.hits[0].webformatURL)
+    }
 
 }
 
@@ -86,10 +91,10 @@ export async function getDataFromApi(e) {
 const fetchApiData = async () => {
     return fetch('/api_data')
         .then((res) => res.json())
-        .then((keys))
+
 }
 
-const getDataFromGeonames = async (urlGeonames, inputDestinationValue, geonamesUsername) => {
+const getDataFromGeonames = async (inputDestinationValue, geonamesUsername) => {
     const res = await axios.get(`${urlGeonames}${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
     try {
         console.log(res.data)
@@ -100,7 +105,7 @@ const getDataFromGeonames = async (urlGeonames, inputDestinationValue, geonamesU
 }
 
 
-const getCurrentWeather = async (urlCurrentWeatherbit, latitude, longitude, weatherbitApiKey) => {
+const getCurrentWeather = async (latitude, longitude, weatherbitApiKey) => {
     const res = await axios.get(`${urlCurrentWeatherbit}${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
     try {
         console.log(res.data)
@@ -110,7 +115,7 @@ const getCurrentWeather = async (urlCurrentWeatherbit, latitude, longitude, weat
     }
 }
 
-const getPredictedWeather = async (urlDailytWeatherbit, latitude, longitude, weatherbitApiKey) => {
+const getPredictedWeather = async (latitude, longitude, weatherbitApiKey) => {
     const res = await axios.get(`${urlDailytWeatherbit}${latitude}&lon=${longitude}&key=${weatherbitApiKey}`)
     try {
         console.log(res.data)
@@ -121,11 +126,11 @@ const getPredictedWeather = async (urlDailytWeatherbit, latitude, longitude, wea
 
 }
 
-const getImgPixabay = async (urlPixabay, pixabayApiKey, country, urlEndPixabay) => {
+const getImgPixabay = async (pixabayApiKey, country) => {
     const res = await axios.get(`${urlPixabay}${pixabayApiKey}&q=${country}${urlEndPixabay}`)
     try {
         console.log(res.data)
-        return res.data
+        return res.data;
     } catch (error) {
         console.log('error with Pixabay ')
     }
