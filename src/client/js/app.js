@@ -107,8 +107,6 @@ export function getDataFromApi(e) {
             console.log(err, 'something went wrong')
             warning.textContent = "We are sorry but something went wrong";
         })
-
-
 }
 
 
