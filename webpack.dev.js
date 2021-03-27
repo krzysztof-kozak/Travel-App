@@ -27,7 +27,8 @@ module.exports = {
                 options: {
                     presets: [
                         ['@babel/preset-env', {
-                            targets: "defaults"
+                            targets: "defaults",
+                            exclude: ["@babel/plugin-transform-regenerator"]
                         }]
                     ]
                 }

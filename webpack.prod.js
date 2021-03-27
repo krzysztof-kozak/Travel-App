@@ -13,7 +13,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js',
-      
+
     },
     module: {
         rules: [{
@@ -24,7 +24,8 @@ module.exports = {
                     options: {
                         presets: [
                             ['@babel/preset-env', {
-                                targets: "defaults"
+                                targets: "defaults",
+                                exclude: ["@babel/plugin-transform-regenerator"]
                             }]
                         ]
                     }
