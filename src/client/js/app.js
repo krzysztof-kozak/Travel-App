@@ -27,73 +27,67 @@ export const imgCountry = document.querySelector('.feature-plan__img-city');
 
 // Links From APIs 
 
-const urlGeonames = 'http://api.geonames.org/searchJSON?q=';
-const urlCurrentWeatherbit = 'https://api.weatherbit.io/v2.0/current?lat=';
-const urlDailytWeatherbit = 'https://api.weatherbit.io/v2.0/forecast/daily?lat=';
-const urlPixabay = 'https://pixabay.com/api/?key=';
-const urlEndPixabay = '&orientation=horizontal&category=buildings&per_page=3';
+// dlaczego  consty tutaj są niewidoczne dla funkcji asynch od linijki 92
+// const urlGeonames = 'http://api.geonames.org/searchJSON?q=';
+// const urlCurrentWeatherbit = 'https://api.weatherbit.io/v2.0/current?lat=';
+// const urlDailytWeatherbit = 'https://api.weatherbit.io/v2.0/forecast/daily?lat=';
+// const urlPixabay = 'https://pixabay.com/api/?key=';
+// const urlEndPixabay = '&orientation=horizontal&category=buildings&per_page=3';
 
 
 export async function getDataFromApi(e) {
-e.preventDefault()
-const inputDestinationValue = inputDestination.value;
-enterCity.innerHTML = inputDestination.value;
+    e.preventDefault()
+    const inputDestinationValue = inputDestination.value;
+    enterCity.innerHTML = inputDestination.value;
 
-if (inputDestinationValue === '') {
-    alertFn()
-    return false;
-}
-// receive api key from server side
-fetch('/api_data')
-    .then((res) => res.json())
-    .then((keys) => {
-            const {
-                geonamesUsername,
-                weatherbitApiKey,
-                pixabayApiKey
-            } = keys
-
-            const location = await getDataFromGeonames(urlGeonames, inputDestinationValue, geonamesUsername)
-            showItem()
-            const {
-                days
-            } = getTime()
-            if (days === -1 || days === 0) {
-                const currentWeather = await getCurrentWeather(urlCurrentWeatherbit, {
-                    latitude: location.geonames[0].lat,
-                    longitude: location.geonames[0].lng,
-                    country: location.geonames[0].countryName,
-                }, weatherbitApiKey)
-            } else if (days >= 1 && days <= 16) {
-                const predictedWeather = await getPredictedWeather(urlDailytWeatherbit, {
-                    latitude: location.geonames[0].lat,
-                    longitude: location.geonames[0].lng,
-                    country: location.geonames[0].countryName,
-                }, weatherbitApiKey)
-            } else {
-                alertMoreDays()
-                cleanUp()
-                return false;
-            }
-            if (currentWeather) {
-                const pixabayData = await getImgPixabay(urlPixabay, pixabayApiKey, country, urlEndPixabay {
-                    temperature: currentWeather.data[0].temp,
-                    descWeather: currentWeather.data[0].weather.description,
-                })
-            } else if (predictedWeather) {
-                const pixabayData = await getImgPixabay(urlPixabay, pixabayApiKey, country, urlEndPixabay {
-                        temperature: currentWeather.data[0].temp,
-                        descWeather: currentWeather.data[0].weather.description,
-                    }
-
-
-
-
-                })
-        }
+    if (inputDestinationValue === '') {
+        alertFn()
+        return false;
     }
-})
-// asynchronous function to fetch the data 
+    // receive api key from server side
+    const keys = await fetchApiData()
+    const {
+        geonamesUsername,
+        weatherbitApiKey,
+        pixabayApiKey
+    } = keys
+
+    const location = await getDataFromGeonames(inputDestinationValue, geonamesUsername)
+    showItem()
+    const {
+        days
+    } = getTime()
+
+    if (days > 16 && days < 0) {
+        alertMoreDays()
+        cleanUp()
+        return
+    }
+    let weather;
+    if (days === -1 || days === 0) {
+        weather = await getCurrentWeather({
+            latitude: location.geonames[0].lat,
+            longitude: location.geonames[0].lng,
+            country: location.geonames[0].countryName,
+        }, weatherbitApiKey).data[0]
+    } else if (days >= 1 && days <= 16) {
+        weather = await getPredictedWeather({
+            latitude: location.geonames[0].lat,
+            longitude: location.geonames[0].lng,
+            country: location.geonames[0].countryName,
+        }, weatherbitApiKey).data[days - 1]
+    }
+
+    const pixabayData = await getImgPixabay(pixabayApiKey, country, weather.temp, weather.weather.description)
+
+}
+
+// asynchronous function 
+const fetchApiData = async () => {
+    return fetch('/api_data')
+        .then((res) => res.json())
+        .then((keys))
+}
 
 const getDataFromGeonames = async (urlGeonames, inputDestinationValue, geonamesUsername) => {
     const res = await axios.get(`${urlGeonames}${inputDestinationValue}&maxRows=1&username=${geonamesUsername}`)
@@ -172,4 +166,6 @@ const showItem = () => {
 
 
 
-btnSubmitForm.addEventListener('click', getDataFromApi) btnSubmitForm.addEventListener('click', appUpTime) btnDelete.addEventListener('click', cleanUp)
+btnSubmitForm.addEventListener('click', getDataFromApi)
+btnSubmitForm.addEventListener('click', appUpTime)
+btnDelete.addEventListener('click', cleanUp)
