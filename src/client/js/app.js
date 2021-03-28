@@ -70,13 +70,13 @@ export async function getDataFromApi(e) {
             latitude: location.geonames[0].lat,
             longitude: location.geonames[0].lng,
             country,
-        }, weatherbitApiKey).data[0]
+        }, weatherbitApiKey)
     } else if (days >= 1 && days <= 16) {
         weather = await getPredictedWeather({
             latitude: location.geonames[0].lat,
             longitude: location.geonames[0].lng,
             country,
-        }, weatherbitApiKey).data[days - 1]
+        }, weatherbitApiKey)
     }
 
     
