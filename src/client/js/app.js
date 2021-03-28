@@ -69,7 +69,7 @@ export async function getDataFromApi(e) {
         weather = await getCurrentWeather({
             latitude: location.geonames[0].lat,
             longitude: location.geonames[0].lng,
-            country,
+            country, // chyba tego tu nie potrzebuje bo po co ? 
         }, weatherbitApiKey)
     } else if (days >= 1 && days <= 16) {
         weather = await getPredictedWeather({
@@ -79,8 +79,15 @@ export async function getDataFromApi(e) {
         }, weatherbitApiKey)
     }
 
-    
+    // problemy :
+    // problem z pobraniem Api z WeatherBIT - po url widać ze nie dostaje on odpowiednich lat,lon i key 
+    // problem z wyswietleniem temp i opisu pogody 
+
+    // wyswietlenie temp i opisu pogody 
+    updateFields(weather.data[0].temp, weather.data[0].weather.description)
+
     const pixabayData = await getImgPixabay(pixabayApiKey, country)
+    
     if (pixabayData && pixabayData.hits && pixabayData.hits.length) {
         imgCountry.setAttribute('src', pixabayData.hits[0].webformatURL)
     }
@@ -136,7 +143,11 @@ const getImgPixabay = async (pixabayApiKey, country) => {
     }
 }
 
-
+// Function updateFields 
+const updateFields = (temperature, descWeather) => {
+    temp.innerHTML = `${Math.round(temperature)}°C`
+    weatherDescription.innerHTML = descWeather;
+}
 
 // Show Items
 const showItem = () => {
