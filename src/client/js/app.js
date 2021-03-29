@@ -57,6 +57,7 @@ export async function getDataFromApi(e) {
     const {
         days
     } = getTime()
+    console.log(days)
 
     if (days > 16 && days < 0) {
         alertMoreDays()
@@ -65,29 +66,19 @@ export async function getDataFromApi(e) {
     }
     let weather;
     const country = location.geonames[0].countryName;
+    const latitude = location.geonames[0].lat
+    const longitude = location.geonames[0].lng
+    console.log(latitude, longitude)
     if (days === -1 || days === 0) {
-        weather = await getCurrentWeather({
-            latitude: location.geonames[0].lat,
-            longitude: location.geonames[0].lng,
-            country, // chyba tego tu nie potrzebuje bo po co ? 
-        }, weatherbitApiKey)
+        weather = await getCurrentWeather(latitude, longitude, weatherbitApiKey)
+        updateFields(weather.data[0].temp, weather.data[0].weather.description)
     } else if (days >= 1 && days <= 16) {
-        weather = await getPredictedWeather({
-            latitude: location.geonames[0].lat,
-            longitude: location.geonames[0].lng,
-            country,
-        }, weatherbitApiKey)
+        weather = await getPredictedWeather(latitude, longitude, weatherbitApiKey)
+        updateFields(weather.data[0].temp, weather.data[0].weather.description)
     }
 
-    // problemy :
-    // problem z pobraniem Api z WeatherBIT - po url widać ze nie dostaje on odpowiednich lat,lon i key 
-    // problem z wyswietleniem temp i opisu pogody 
-
-    // wyswietlenie temp i opisu pogody 
-    updateFields(weather.data[0].temp, weather.data[0].weather.description)
-
     const pixabayData = await getImgPixabay(pixabayApiKey, country)
-    
+
     if (pixabayData && pixabayData.hits && pixabayData.hits.length) {
         imgCountry.setAttribute('src', pixabayData.hits[0].webformatURL)
     }
