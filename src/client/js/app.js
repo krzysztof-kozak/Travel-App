@@ -27,61 +27,73 @@ export const imgCountry = document.querySelector('.feature-plan__img-city');
 
 // Links From APIs 
 
-// dalej u mnie sa nie widoczne pomimo zainstalwania paczki 
 const urlGeonames = 'http://api.geonames.org/searchJSON?q=';
 const urlCurrentWeatherbit = 'https://api.weatherbit.io/v2.0/current?lat=';
 const urlDailytWeatherbit = 'https://api.weatherbit.io/v2.0/forecast/daily?lat=';
 const urlPixabay = 'https://pixabay.com/api/?key=';
 const urlEndPixabay = '&orientation=horizontal&category=buildings&per_page=3';
 
+// Problemy:
+// zauważyłam że ponwonie zmianie daty , ona od razu sie aktualizuje nie czeka na klikniecie guzika ?
+// nie działa mi ten warunek ?? linjka 66
 
 export async function getDataFromApi(e) {
-    e.preventDefault()
-    const inputDestinationValue = inputDestination.value;
-    enterCity.innerHTML = inputDestination.value;
 
-    if (inputDestinationValue === '') {
-        alertFn()
-        return false;
+    try {
+        e.preventDefault()
+        const inputDestinationValue = inputDestination.value;
+        enterCity.innerHTML = inputDestination.value;
+
+        if (inputDestinationValue === '') {
+            alertFn()
+            return false;
+        }
+        // receive api key from server side
+        const keys = await fetchApiData()
+        const {
+            geonamesUsername,
+            weatherbitApiKey,
+            pixabayApiKey
+        } = keys
+
+        const location = await getDataFromGeonames(inputDestinationValue, geonamesUsername)
+        showItem()
+        const {
+            days
+        } = getTime()
+        console.log(days)
+
+        // nie działa mi ten warunek ??
+        if (days > 16 && days < 0) {
+            alertMoreDays()
+            cleanUp()
+            return
+        }
+
+        let weather;
+        const country = location.geonames[0].countryName;
+        const latitude = location.geonames[0].lat
+        const longitude = location.geonames[0].lng
+        console.log(latitude, longitude)
+
+        if (days === -1 || days === 0) {
+            weather = await getCurrentWeather(latitude, longitude, weatherbitApiKey)
+            updateFields(weather.data[0].temp, weather.data[0].weather.description)
+        } else if (days >= 1 && days <= 16) {
+            weather = await getPredictedWeather(latitude, longitude, weatherbitApiKey)
+            updateFields(weather.data[0].temp, weather.data[0].weather.description)
+        }
+
+        const pixabayData = await getImgPixabay(pixabayApiKey, country)
+
+        if (pixabayData && pixabayData.hits && pixabayData.hits.length) {
+            imgCountry.setAttribute('src', pixabayData.hits[0].webformatURL)
+        }
+    } catch (error) {
+        console.log(err, 'something went wrong')
+        warning.textContent = "We are sorry but something went wrong";
     }
-    // receive api key from server side
-    const keys = await fetchApiData()
-    const {
-        geonamesUsername,
-        weatherbitApiKey,
-        pixabayApiKey
-    } = keys
 
-    const location = await getDataFromGeonames(inputDestinationValue, geonamesUsername)
-    showItem()
-    const {
-        days
-    } = getTime()
-    console.log(days)
-
-    if (days > 16 && days < 0) {
-        alertMoreDays()
-        cleanUp()
-        return
-    }
-    let weather;
-    const country = location.geonames[0].countryName;
-    const latitude = location.geonames[0].lat
-    const longitude = location.geonames[0].lng
-    console.log(latitude, longitude)
-    if (days === -1 || days === 0) {
-        weather = await getCurrentWeather(latitude, longitude, weatherbitApiKey)
-        updateFields(weather.data[0].temp, weather.data[0].weather.description)
-    } else if (days >= 1 && days <= 16) {
-        weather = await getPredictedWeather(latitude, longitude, weatherbitApiKey)
-        updateFields(weather.data[0].temp, weather.data[0].weather.description)
-    }
-
-    const pixabayData = await getImgPixabay(pixabayApiKey, country)
-
-    if (pixabayData && pixabayData.hits && pixabayData.hits.length) {
-        imgCountry.setAttribute('src', pixabayData.hits[0].webformatURL)
-    }
 
 }
 
@@ -147,30 +159,6 @@ const showItem = () => {
     btnDelete.classList.add('active')
     imgCountry.classList.add('active')
 }
-
-
-// Function post date to my server 
-// function postData(url, data) {
-//     return fetch(url, {
-//         method: 'POST',
-//         credentials: 'same-origin',
-//         headers: {
-//             'Content-Type': "application/json"
-//         },
-//         body: JSON.stringify(data) // strinfigify convert object into a string 
-//     });
-// };
-
-// //  Function updateUI
-// const updateUI = () => {
-//     fetch('/all')
-//         .then(res => res.json())
-//         .then((json) => {
-//             temp.innerHTML = `${Math.round(json.temp)}°C`
-//             weatherDescription.innerHTML = json.weatherDescription;
-//         })
-// }
-
 
 
 btnSubmitForm.addEventListener('click', getDataFromApi)
