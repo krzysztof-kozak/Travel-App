@@ -49,7 +49,7 @@ export async function getDataFromApi(e) {
     console.log(days);
 
     // nie działa mi ten warunek ??
-    if (days > 16 && days < 0) {
+    if (days > 16 || days < 0) {
       alertMoreDays();
       cleanUp();
       return;
