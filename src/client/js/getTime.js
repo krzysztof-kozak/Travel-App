@@ -8,6 +8,7 @@ const daysCount = document.querySelector('.days-count');
 const hoursCount = document.querySelector('.hours-count');
 const minutesCount = document.querySelector('.minutes-count');
 const secondsCount = document.querySelector('.seconds-count');
+let usersTime;
 
 // id for interval Coundown seconds
 let intervalId;
@@ -15,7 +16,7 @@ let intervalId;
 export const getTime = () => {
   const currentTime = new Date();
   //the difference between now and the our enter date
-  const differenceTime = getUserTimeFromForm() - currentTime;
+  const differenceTime = usersTime - currentTime;
   //differenceTime is millisecond
 
   //1000 milisecond is 1 seconds , 1 minutes is 60 seconds , 1 hour is 60 minutes  1 day is 24 hours
@@ -48,6 +49,7 @@ export const getUserTimeFromForm = () => {
 };
 
 export const appUpTime = () => {
+  usersTime = new Date(`${eventMonth.value} ${eventDay.value} ${eventYear.value}`);
   setTime();
   clearInterval(intervalId);
   intervalId = setInterval(setTime, 1000);
